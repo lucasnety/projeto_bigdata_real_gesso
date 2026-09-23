@@ -1,0 +1,191 @@
+id_manutencao,id_cliente,id_servico_origem,descricao,preco,data_solicitacao,data_execucao,status
+1,134,1149,Retoque de pintura no gesso 3D,339.24,2026-01-20,,solicitada
+2,299,1538,Reparo em divisória drywall após passagem de fiação elétrica,312.72,2025-11-26,2025-12-12,concluída
+3,77,443,Reforço de fixação do forro,306.0,2026-09-03,,agendada
+4,28,1134,Infiltração próxima à sanca,,2026-04-14,2026-04-23,concluída
+5,172,,Infiltração próxima à sanca,376.65,2025-09-26,,agendada
+6,266,,Trinca no rodateto após acomodação da estrutura,257.38,2026-09-13,2026-09-17,concluída
+7,58,1154,Retoque de pintura no gesso 3D,264.01,2026-04-02,,agendada
+8,57,749,Trinca no rodateto após acomodação da estrutura,89.85,2025-11-20,,solicitada
+9,200,1065,Reparo em divisória drywall após passagem de fiação elétrica,195.25,2026-02-27,2026-03-09,concluída
+10,84,194,Pequeno reparo estético solicitado pelo cliente,375.97,2024-12-13,2024-12-26,concluída
+11,172,111,Infiltração próxima à sanca,416.49,2026-02-24,,solicitada
+12,196,24,Infiltração próxima à sanca,,2025-12-01,,agendada
+13,285,1051,Reparo em divisória drywall após passagem de fiação elétrica,,2026-09-19,2026-09-21,concluída
+14,219,1499,Substituição de placa de drywall danificada por umidade,150.8,2024-06-25,2024-07-02,concluída
+15,31,,Trinca no rodateto após acomodação da estrutura,225.66,2025-09-09,2025-09-25,concluída
+16,96,1485,Pequeno reparo estético solicitado pelo cliente,106.79,2026-08-13,,agendada
+17,101,313,Reparo em divisória drywall após passagem de fiação elétrica,127.32,2026-06-05,,agendada
+18,282,1375,Trinca no rodateto após acomodação da estrutura,84.34,2026-08-05,2026-08-07,concluída
+19,331,656,Reforço de fixação do forro,409.29,2026-08-04,,solicitada
+20,289,,Retoque de pintura no gesso 3D,58.4,2025-11-25,,solicitada
+21,259,837,Reparo em divisória drywall após passagem de fiação elétrica,140.86,2026-06-05,2026-06-24,concluída
+22,291,452,Trinca no rodateto após acomodação da estrutura,324.61,2026-08-19,2026-08-22,concluída
+23,146,55,Ajuste/realinhamento de moldura,256.99,2024-09-16,2024-09-17,concluída
+24,147,448,Pequeno reparo estético solicitado pelo cliente,200.3,2025-02-10,,agendada
+25,155,610,Ajuste/realinhamento de moldura,254.26,2026-07-08,2026-07-24,concluída
+26,237,507,Ajuste/realinhamento de moldura,361.07,2026-01-25,,agendada
+27,116,1089,Substituição de placa de drywall danificada por umidade,,2025-10-25,,solicitada
+28,293,1143,Reforço de fixação do forro,128.28,2025-08-13,2025-08-16,concluída
+29,65,50,Pequeno reparo estético solicitado pelo cliente,337.97,2026-04-18,2026-04-23,concluída
+30,212,1126,Reparo em divisória drywall após passagem de fiação elétrica,122.32,2026-08-08,2026-08-23,concluída
+31,273,299,Pequeno reparo estético solicitado pelo cliente,307.1,2026-09-08,2026-09-12,concluída
+32,63,756,Retoque de pintura no gesso 3D,241.39,2025-09-05,2025-09-13,concluída
+33,97,203,Infiltração próxima à sanca,98.2,2026-05-28,,agendada
+34,290,950,Retoque de pintura no gesso 3D,,2026-09-09,2026-09-16,concluída
+35,34,744,Infiltração próxima à sanca,327.24,2026-05-23,2026-05-26,concluída
+36,214,768,Infiltração próxima à sanca,313.2,2026-08-03,,agendada
+37,245,149,Reparo em divisória drywall após passagem de fiação elétrica,,2026-01-18,2026-01-27,concluída
+38,213,,Substituição de placa de drywall danificada por umidade,197.88,2026-01-11,,agendada
+39,15,710,Reforço de fixação do forro,386.61,2026-09-12,2026-09-17,concluída
+40,62,1040,Reparo em divisória drywall após passagem de fiação elétrica,392.21,2025-12-20,2025-12-28,concluída
+41,315,1038,Retoque de pintura no gesso 3D,123.41,2026-01-02,,solicitada
+42,271,1311,Reforço de fixação do forro,363.61,2025-05-08,,solicitada
+43,211,,Reforço de fixação do forro,,2025-09-20,,solicitada
+44,262,1334,Reforço de fixação do forro,403.89,2024-10-31,2024-11-04,concluída
+45,79,1219,Pequeno reparo estético solicitado pelo cliente,305.47,2025-11-22,,agendada
+46,200,1544,Trinca no rodateto após acomodação da estrutura,135.75,2025-10-25,2025-11-10,concluída
+47,235,1206,Reparo em divisória drywall após passagem de fiação elétrica,57.95,2026-07-21,,agendada
+48,157,,Reparo em divisória drywall após passagem de fiação elétrica,,2026-07-30,2026-08-10,concluída
+49,2,856,Reparo em divisória drywall após passagem de fiação elétrica,328.84,2026-07-18,,solicitada
+50,181,572,Pequeno reparo estético solicitado pelo cliente,119.86,2026-05-02,2026-05-10,concluída
+51,105,,Substituição de placa de drywall danificada por umidade,393.34,2026-06-19,2026-07-04,concluída
+52,301,,Reforço de fixação do forro,144.38,2026-05-20,2026-05-31,concluída
+53,59,889,Pequeno reparo estético solicitado pelo cliente,412.96,2025-03-07,2025-03-09,concluída
+54,281,1443,Trinca no rodateto após acomodação da estrutura,98.26,2025-10-31,,solicitada
+55,210,,Infiltração próxima à sanca,378.54,2026-07-04,,solicitada
+56,326,1344,Substituição de placa de drywall danificada por umidade,264.58,2026-01-17,2026-01-31,concluída
+57,134,1215,Reparo em divisória drywall após passagem de fiação elétrica,351.96,2025-06-03,,agendada
+58,35,334,Trinca no rodateto após acomodação da estrutura,274.23,2026-08-28,,agendada
+59,145,,Retoque de pintura no gesso 3D,96.42,2025-07-23,2025-07-26,concluída
+60,341,1320,Retoque de pintura no gesso 3D,322.94,2025-12-04,2025-12-06,concluída
+61,40,1176,Reparo em divisória drywall após passagem de fiação elétrica,114.28,2025-12-27,2026-01-05,concluída
+62,128,651,Reparo em divisória drywall após passagem de fiação elétrica,378.19,2025-12-17,,agendada
+63,66,1327,Reforço de fixação do forro,349.58,2024-08-31,,agendada
+64,168,1366,Substituição de placa de drywall danificada por umidade,,2026-07-26,2026-08-01,concluída
+65,6,786,Substituição de placa de drywall danificada por umidade,224.77,2026-05-07,,solicitada
+66,167,1075,Trinca no rodateto após acomodação da estrutura,370.16,2025-11-03,,solicitada
+67,24,1401,Infiltração próxima à sanca,230.43,2026-01-26,2026-01-26,concluída
+68,259,,Infiltração próxima à sanca,145.38,2026-01-27,,solicitada
+69,236,213,Ajuste/realinhamento de moldura,219.27,2026-08-05,2026-08-23,concluída
+70,98,1518,Substituição de placa de drywall danificada por umidade,389.38,2026-04-07,2026-04-23,concluída
+71,236,1474,Pequeno reparo estético solicitado pelo cliente,297.57,2026-06-02,,solicitada
+72,271,,Ajuste/realinhamento de moldura,284.03,2025-08-26,2025-08-29,concluída
+73,250,695,Trinca no rodateto após acomodação da estrutura,319.02,2025-09-03,2025-09-23,concluída
+74,293,1143,Reforço de fixação do forro,,2025-04-24,2025-05-12,concluída
+75,208,1382,Reparo em divisória drywall após passagem de fiação elétrica,183.42,2026-09-15,2026-09-21,concluída
+76,234,1139,Retoque de pintura no gesso 3D,,2026-07-06,,agendada
+77,259,837,Trinca no rodateto após acomodação da estrutura,,2025-09-08,,solicitada
+78,325,388,Trinca no rodateto após acomodação da estrutura,,2026-07-03,2026-07-21,concluída
+79,1,512,Reforço de fixação do forro,328.17,2024-11-11,2024-11-27,concluída
+80,275,1559,Trinca no rodateto após acomodação da estrutura,234.52,2026-06-11,2026-06-12,concluída
+81,18,1185,Reforço de fixação do forro,150.39,2026-02-16,2026-03-04,concluída
+82,208,1022,Reforço de fixação do forro,395.53,2026-09-13,2026-09-19,concluída
+83,54,,Substituição de placa de drywall danificada por umidade,299.08,2026-01-22,,agendada
+84,98,820,Ajuste/realinhamento de moldura,183.37,2025-04-09,2025-04-21,concluída
+85,201,,Trinca no rodateto após acomodação da estrutura,,2026-02-27,2026-03-14,concluída
+86,324,399,Ajuste/realinhamento de moldura,72.57,2026-08-21,,agendada
+87,173,825,Retoque de pintura no gesso 3D,362.71,2025-04-22,2025-04-26,concluída
+88,150,718,Trinca no rodateto após acomodação da estrutura,,2025-07-05,,solicitada
+89,100,959,Infiltração próxima à sanca,321.0,2026-09-01,2026-09-02,concluída
+90,343,899,Pequeno reparo estético solicitado pelo cliente,150.55,2024-09-05,,agendada
+91,205,,Trinca no rodateto após acomodação da estrutura,124.04,2025-05-19,,agendada
+92,163,127,Reforço de fixação do forro,375.5,2026-03-24,,solicitada
+93,168,1246,Ajuste/realinhamento de moldura,135.3,2025-12-30,2026-01-12,concluída
+94,159,308,Reparo em divisória drywall após passagem de fiação elétrica,108.96,2025-12-12,,agendada
+95,207,,Reparo em divisória drywall após passagem de fiação elétrica,118.91,2026-06-01,2026-06-06,concluída
+96,284,,Trinca no rodateto após acomodação da estrutura,355.08,2026-09-04,2026-09-19,concluída
+97,120,15,Reparo em divisória drywall após passagem de fiação elétrica,142.86,2026-03-10,2026-03-16,concluída
+98,287,1542,Infiltração próxima à sanca,378.15,2025-03-16,2025-03-23,concluída
+99,271,1311,Infiltração próxima à sanca,185.84,2026-01-02,2026-01-10,concluída
+100,182,263,Pequeno reparo estético solicitado pelo cliente,,2026-09-06,,solicitada
+101,28,454,Infiltração próxima à sanca,281.73,2026-07-11,2026-07-31,concluída
+102,171,991,Reforço de fixação do forro,249.93,2025-09-17,,agendada
+103,239,615,Reparo em divisória drywall após passagem de fiação elétrica,85.47,2026-02-18,2026-02-22,concluída
+104,105,963,Pequeno reparo estético solicitado pelo cliente,169.59,2025-09-19,2025-09-19,concluída
+105,209,408,Ajuste/realinhamento de moldura,184.18,2026-04-23,2026-05-09,concluída
+106,315,1092,Pequeno reparo estético solicitado pelo cliente,261.7,2025-08-12,,agendada
+107,135,1273,Reparo em divisória drywall após passagem de fiação elétrica,300.47,2025-11-21,,solicitada
+108,93,1406,Substituição de placa de drywall danificada por umidade,111.04,2026-09-12,2026-09-15,concluída
+109,128,1572,Trinca no rodateto após acomodação da estrutura,345.21,2026-09-12,2026-09-17,concluída
+110,182,263,Trinca no rodateto após acomodação da estrutura,243.88,2026-08-25,2026-09-14,concluída
+111,57,838,Retoque de pintura no gesso 3D,232.86,2024-09-28,,solicitada
+112,225,1180,Infiltração próxima à sanca,257.02,2026-09-17,2026-09-18,concluída
+113,294,,Ajuste/realinhamento de moldura,104.26,2026-09-10,2026-09-14,concluída
+114,191,,Retoque de pintura no gesso 3D,139.54,2026-03-29,2026-04-10,concluída
+115,289,425,Retoque de pintura no gesso 3D,277.58,2026-09-21,2026-09-22,concluída
+116,120,15,Substituição de placa de drywall danificada por umidade,203.46,2026-04-16,2026-04-25,concluída
+117,215,,Infiltração próxima à sanca,,2024-02-29,2024-03-06,concluída
+118,233,33,Ajuste/realinhamento de moldura,190.66,2026-06-13,,solicitada
+119,86,729,Ajuste/realinhamento de moldura,125.81,2026-09-21,,agendada
+120,204,350,Infiltração próxima à sanca,217.25,2025-12-29,2026-01-14,concluída
+121,302,885,Trinca no rodateto após acomodação da estrutura,,2026-04-09,,agendada
+122,276,629,Ajuste/realinhamento de moldura,326.68,2025-10-26,2025-10-26,concluída
+123,202,859,Reparo em divisória drywall após passagem de fiação elétrica,256.32,2026-08-01,,agendada
+124,53,1379,Pequeno reparo estético solicitado pelo cliente,283.14,2025-02-16,,agendada
+125,9,895,Reforço de fixação do forro,271.8,2026-09-17,,agendada
+126,171,609,Infiltração próxima à sanca,185.33,2026-09-19,,agendada
+127,30,30,Retoque de pintura no gesso 3D,314.84,2026-08-09,,solicitada
+128,60,531,Trinca no rodateto após acomodação da estrutura,408.36,2026-01-09,,agendada
+129,2,1545,Reforço de fixação do forro,61.1,2026-04-26,2026-05-14,concluída
+130,226,717,Pequeno reparo estético solicitado pelo cliente,250.66,2024-08-29,2024-09-12,concluída
+131,138,,Pequeno reparo estético solicitado pelo cliente,249.71,2025-08-14,,solicitada
+132,248,569,Reparo em divisória drywall após passagem de fiação elétrica,353.18,2026-04-18,2026-05-07,concluída
+133,236,,Reforço de fixação do forro,71.37,2026-01-06,,agendada
+134,149,584,Substituição de placa de drywall danificada por umidade,160.32,2026-03-26,2026-04-02,concluída
+135,209,523,Substituição de placa de drywall danificada por umidade,,2026-05-16,2026-05-19,concluída
+136,221,,Reparo em divisória drywall após passagem de fiação elétrica,51.89,2026-02-09,2026-02-11,concluída
+137,85,686,Retoque de pintura no gesso 3D,,2026-09-05,,agendada
+138,37,1220,Infiltração próxima à sanca,213.28,2025-09-29,2025-10-07,concluída
+139,106,1363,Trinca no rodateto após acomodação da estrutura,115.65,2026-08-05,2026-08-10,concluída
+140,39,1566,Substituição de placa de drywall danificada por umidade,199.87,2026-03-13,,solicitada
+141,101,1144,Trinca no rodateto após acomodação da estrutura,286.24,2026-08-15,2026-08-17,concluída
+142,121,87,Substituição de placa de drywall danificada por umidade,272.81,2025-01-07,2025-01-23,concluída
+143,313,270,Reparo em divisória drywall após passagem de fiação elétrica,,2025-09-27,,agendada
+144,286,1070,Pequeno reparo estético solicitado pelo cliente,59.59,2024-09-16,,agendada
+145,27,398,Substituição de placa de drywall danificada por umidade,75.37,2024-05-06,2024-05-06,concluída
+146,207,,Infiltração próxima à sanca,256.81,2026-08-22,2026-09-02,concluída
+147,84,1241,Trinca no rodateto após acomodação da estrutura,281.42,2025-07-17,2025-07-29,concluída
+148,292,740,Reforço de fixação do forro,132.37,2026-07-16,2026-08-03,concluída
+149,143,1105,Trinca no rodateto após acomodação da estrutura,,2026-05-28,2026-06-12,concluída
+150,210,1331,Substituição de placa de drywall danificada por umidade,311.64,2024-09-11,2024-09-17,concluída
+151,148,36,Reparo em divisória drywall após passagem de fiação elétrica,80.98,2026-08-17,,agendada
+152,189,429,Ajuste/realinhamento de moldura,153.4,2024-06-03,,agendada
+153,121,87,Reparo em divisória drywall após passagem de fiação elétrica,148.12,2026-08-01,,agendada
+154,330,992,Substituição de placa de drywall danificada por umidade,224.34,2026-06-17,,solicitada
+155,252,801,Ajuste/realinhamento de moldura,,2025-12-21,2025-12-21,concluída
+156,145,861,Reforço de fixação do forro,290.38,2026-03-13,,agendada
+157,58,1229,Infiltração próxima à sanca,208.85,2026-07-28,,solicitada
+158,169,,Infiltração próxima à sanca,,2026-08-09,2026-08-29,concluída
+159,39,1385,Reparo em divisória drywall após passagem de fiação elétrica,338.57,2026-04-27,,agendada
+160,170,,Ajuste/realinhamento de moldura,334.52,2025-10-18,2025-11-03,concluída
+161,246,122,Reforço de fixação do forro,351.92,2024-10-11,2024-10-20,concluída
+162,305,1152,Trinca no rodateto após acomodação da estrutura,418.68,2026-09-18,,agendada
+163,202,1210,Retoque de pintura no gesso 3D,,2026-04-23,2026-05-05,concluída
+164,317,,Reforço de fixação do forro,329.18,2026-03-10,2026-03-14,concluída
+165,302,13,Trinca no rodateto após acomodação da estrutura,337.11,2025-12-30,,agendada
+166,216,527,Infiltração próxima à sanca,360.74,2026-08-25,,solicitada
+167,152,1435,Substituição de placa de drywall danificada por umidade,361.09,2024-09-27,2024-10-14,concluída
+168,261,548,Substituição de placa de drywall danificada por umidade,54.28,2026-01-17,2026-01-29,concluída
+169,332,,Reparo em divisória drywall após passagem de fiação elétrica,147.04,2026-07-23,2026-08-06,concluída
+170,72,1420,Pequeno reparo estético solicitado pelo cliente,178.9,2026-07-31,,solicitada
+171,44,,Retoque de pintura no gesso 3D,296.11,2024-10-26,2024-10-30,concluída
+172,233,1287,Retoque de pintura no gesso 3D,116.28,2026-09-17,2026-09-20,concluída
+173,260,943,Reparo em divisória drywall após passagem de fiação elétrica,374.91,2026-07-10,,agendada
+174,314,,Pequeno reparo estético solicitado pelo cliente,412.75,2026-01-26,2026-02-11,concluída
+175,202,611,Ajuste/realinhamento de moldura,168.46,2026-08-05,,solicitada
+176,303,1424,Reforço de fixação do forro,,2026-09-09,,solicitada
+177,304,,Retoque de pintura no gesso 3D,164.12,2026-05-13,2026-05-19,concluída
+178,229,832,Pequeno reparo estético solicitado pelo cliente,419.23,2026-04-22,,solicitada
+179,133,,Retoque de pintura no gesso 3D,360.5,2026-05-08,2026-05-13,concluída
+180,314,92,Infiltração próxima à sanca,,2026-03-07,,solicitada
+181,225,1488,Substituição de placa de drywall danificada por umidade,405.58,2025-05-08,2025-05-13,concluída
+182,287,1542,Retoque de pintura no gesso 3D,325.7,2024-07-20,2024-07-30,concluída
+183,168,1246,Substituição de placa de drywall danificada por umidade,183.93,2025-10-24,2025-10-27,concluída
+184,101,,Infiltração próxima à sanca,381.92,2025-03-14,,solicitada
+185,282,387,Reparo em divisória drywall após passagem de fiação elétrica,56.16,2025-09-04,2025-09-17,concluída
+186,163,600,Ajuste/realinhamento de moldura,,2025-04-15,2025-04-18,concluída
+187,82,1202,Retoque de pintura no gesso 3D,,2026-02-09,,solicitada
+188,16,1449,Pequeno reparo estético solicitado pelo cliente,348.75,2025-10-23,2025-10-23,concluída
+189,215,1063,Pequeno reparo estético solicitado pelo cliente,285.01,2026-01-17,,agendada
+190,157,1228,Infiltração próxima à sanca,162.38,2025-02-17,,agendada

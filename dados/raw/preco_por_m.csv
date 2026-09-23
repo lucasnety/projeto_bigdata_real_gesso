@@ -1,0 +1,11 @@
+id_preco,tipo_servico,subtipo,unidade_medida,valor,data_atualizacao
+1,Sanca,,metro linear,95.0,2023-10-23
+2,Divisória Drywall,,metro quadrado,130.0,2023-06-13
+3,Forro Drywall,,metro quadrado,95.0,2024-02-20
+4,Gesso Liso,Parede Rebocada,metro quadrado,20.0,2023-12-09
+5,Gesso Liso,Parede de Tijolo,metro quadrado,30.0,2024-02-19
+6,Gesso Liso,Parede Pintada,metro quadrado,22.0,2024-02-16
+7,Moldura de Gesso,7cm,metro linear,12.0,2024-01-15
+8,Moldura de Gesso,10cm,metro linear,15.0,2024-02-05
+9,Moldura de Gesso,15cm,metro linear,17.0,2023-06-23
+10,Moldura de Gesso,20cm,metro linear,20.0,2023-10-30

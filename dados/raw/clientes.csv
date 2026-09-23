@@ -1,0 +1,344 @@
+id_cliente,nome_completo,telefone,email,endereco,cidade,origem_contato,data_cadastro
+1,Brenda Alves,(19) 99600-1338,brenda.alves4@yahoo.com.br,"Feira Pietro Carvalho, 9",Aguaí,Indicação,2025-11-15
+2,Amanda Novais,+55 11 90265-4235,,"Via de Sampaio, 863",Águas da Prata,Panfleto,28/09/2024
+3,Caleb Garcia,+55 11 98161-8495,caleb.garcia90@outlook.com,Morro Vinícius Aparecida,São José do Rio Pardo,Indicação,2024-01-10
+4,Evelyn Santos,(11)91316-4752,evelyn.santos94@outlook.com,Viaduto da Conceição,Espírito Santo do Pinhal,Indicação,2026-08-08
+5,Dr. Gustavo Henrique Rios,(16)92764-8350,,"Viela de Ramos, 3",Aguaí,Instagram,2024-01-27
+6,Arthur Gabriel Dias,35972423884,arthur.dias27@yahoo.com.br,"Campo Otávio Nunes, 83",Aguaí,Instagram,2026-07-02
+7,Dra. Mariane Pacheco,(16) 92269-1669,dra..pacheco89@hotmail.com,"Fazenda João Guilherme Moraes, 11",São João da Boa Vista,Instagram,2023-09-08
+8,Vitória da Cunha,+55 11 95146-2704,vitória.cunha92@yahoo.com.br,"Viela Silveira, 9",Poços de Caldas,Indicação,2024-12-28
+9,Emanuelly Montenegro,(35)99325-2880,emanuelly.montenegro47@hotmail.com,Lagoa de Porto,Poços de Caldas,Indicação,2023-10-09
+10,Luna Mendonça,(19)90391-1718,luna.mendonça9@outlook.com,Núcleo das Neves,Águas da Prata,Facebook,2026-08-11
+11,Davi Lucas Ribeiro,11 46578713,davi.ribeiro97@yahoo.com.br,"Esplanada de da Luz, 496",Casa Branca,Panfleto,2024-05-23
+12,Benício Fernandes,(19)90103-1051,benício.fernandes14@yahoo.com.br,Sítio de da Conceição,Mococa,Indicação,2025-08-08
+13,Isabela da Mota,(19) 96311-6566,,"Favela Valentina Cardoso, 497",Casa Branca,Instagram,2023-10-31
+14,Ana Júlia Rocha,16 33872624,,"Colônia de Araújo, 25",Vargem Grande do Sul,Cliente antigo,2026-08-03
+15,Isadora Barbosa,(35) 96773-6026,isadora.barbosa89@hotmail.com,"Colônia de Aragão, 401",São José do Rio Pardo,Cliente antigo,2026-05-29
+16,Mathias da Luz,(11) 94687-2343,mathias.luz30@hotmail.com,,São João da Boa Vista,Instagram,2023-11-20
+17,Vitor Hugo Araújo,(16) 90812-1913,vitor.araújo28@hotmail.com,"Avenida Carlos Eduardo Pacheco, 98",Itobi,Cliente antigo,2024-11-13
+18,Bárbara Nunes,(19) 94353-4624,bárbara.nunes55@outlook.com,"Trevo de Aparecida, 916",Aguaí,Indicação,2025-10-06
+19,Luara Sá,19 18384251,luara.sá55@hotmail.com,Quadra Pinto,Aguaí,Cliente antigo,2026-08-05
+20,Léo da Paz,(16) 92411-8244,léo.paz22@outlook.com,"Setor Ana Julia Pimenta, 508",Espírito Santo do Pinhal,Indicação,2024-06-06
+21,Giovanna Silva,16901640052,giovanna.silva55@outlook.com,"Viela Porto, 88",São João da Boa Vista,Indicação,2025-04-07
+22,Julia Castro,(35)92805-9826,julia.castro66@gmail.com,"Sítio Letícia Novais, 2",Aguaí,Instagram,2025-10-08
+23,Asafe das Neves,(11) 99232-2602,,"Morro Costela, 61",São José do Rio Pardo,Facebook,2024-08-26
+24,Sra. Maria Sophia Rios,(19) 97337-5433,sra..rios39@outlook.com,"Feira de da Mata, 71",Aguaí,Indicação,2026-01-28
+25,Gael Guerra,(19)91429-4019,gael.guerra45@gmail.com,"Campo Agatha Ferreira, 668",Vargem Grande do Sul,Cliente antigo,2026-07-21
+26,Manuella Siqueira,+55 35 90608-8356,manuella.siqueira14@hotmail.com,"Praça Nina Camargo, 49",Águas da Prata,Indicação,2025-01-12
+27,Lucas Pinto,(19) 95648-2366,lucas.pinto34@outlook.com,"Condomínio de Silveira, 58",São João da Boa Vista,Indicação,2025-11-18
+28,Emanuella Pimenta,35999577738,emanuella.pimenta34@hotmail.com,"Passarela Ágatha Abreu, 44",Espírito Santo do Pinhal,Indicação,2024-02-19
+29,Eloá Ribeiro,19943320037,eloá.ribeiro19@outlook.com,Rodovia Bruna Borges,São João da Boa Vista,Google,2024-09-07
+30,Ana Sophia Marques,,ana.marques80@hotmail.com,"Travessa de Correia, 77",Vargem Grande do Sul,Instagram,2025-10-26
+31,Diogo Rezende,(35) 97083-1727,diogo.rezende53@hotmail.com,"Colônia Vasconcelos, 33",Aguaí,Site,2023-09-22
+32,Vitória Novais,11979868727,vitória.novais30@hotmail.com,,São José do Rio Pardo,Facebook,2023-11-24
+33,Joana Sá,(16) 91434-5581,joana.sá69@yahoo.com.br,"Ladeira de Vargas, 573",Casa Branca,Instagram,2024-12-29
+34,Dom da Conceição,,dom.conceição66@gmail.com,"Distrito de Santos, 71",Casa Branca,Indicação,2025-12-14
+35,Luísa Nogueira,11970546688,luísa.nogueira93@hotmail.com,"Avenida Noah Leão, 19",São José do Rio Pardo,Google,2024-03-16
+36,Hellena Mendonça,(19) 97298-0699,hellena.mendonça90@yahoo.com.br,"Praça Maria Vitória Alves, 75",Espírito Santo do Pinhal,Instagram,2026-09-12
+37,Amanda Barros,11953755646,amanda.barros78@yahoo.com.br,"Conjunto Maria Eduarda Cirino, 5",Mococa,Cliente antigo,2024-06-16
+38,Bruno Melo,(16)93100-3309,bruno.melo97@hotmail.com,Setor de Aragão,Mococa,Indicação,2023-08-24
+39,Isaque Cardoso,19 29912419,isaque.cardoso81@hotmail.com,"Condomínio de Nunes, 57",Espírito Santo do Pinhal,Instagram,2024-05-02
+40,Leonardo Oliveira,19990586518,leonardo.oliveira55@hotmail.com,"Passarela Miguel Barbosa, 531",Águas da Prata,Cliente antigo,2023-10-15
+41,Manuela Albuquerque,+55 35 92849-8776,manuela.albuquerque72@yahoo.com.br,"Residencial Heitor Lopes, 37",Itobi,Panfleto,2026-07-31
+42,Dra. Juliana Duarte,(11) 95075-2735,dra..duarte32@yahoo.com.br,"Chácara da Mota, 83",Mococa,Facebook,2025-12-21
+43,Luigi da Mota,11913678377,luigi.mota11@hotmail.com,"Ladeira de Novais, 9",Vargem Grande do Sul,Instagram,2023-11-13
+44,Allana Borges,,allana.borges54@outlook.com,"Passarela Sales, 64",São João da Boa Vista,Site,2026-03-07
+45,Vitória Ferreira,+55 16 94313-5182,vitória.ferreira54@hotmail.com,"Sítio de Farias, 57",Poços de Caldas,Indicação,2025-09-08
+46,Henrique Sousa,(16) 93524-0824,henrique.sousa80@gmail.com,"Trecho Sabrina Peixoto, 41",São João da Boa Vista,Indicação,2025-11-28
+47,Benjamim Novaes,(16) 97775-2047,benjamim.novaes59@yahoo.com.br,"Conjunto de Porto, 11",Casa Branca,Panfleto,2024-12-02
+48,Benício Guerra,(19)99413-1869,benício.guerra45@hotmail.com,"Travessa Pires, 3",São João da Boa Vista,Indicação,2024-11-22
+49,Heloisa Vasconcelos,35 33412328,heloisa.vasconcelos15@hotmail.com,"Praia Luísa da Rosa, 164",São José do Rio Pardo,Instagram,2024-02-24
+50,Emanuel Abreu,(35) 94713-4936,,"Vila Maria Isis da Rocha, 4",Espírito Santo do Pinhal,Site,2024-08-14
+51,Yago Câmara,(11) 94994-7174,yago.câmara77@gmail.com,"Ladeira Casa Grande, 1",São João da Boa Vista,Google,2026-06-30
+52,Sra. Júlia Montenegro,(16) 99401-3990,,"Praia Enrico Peixoto, 7",Espírito Santo do Pinhal,Google,2026-01-31
+53,Juliana Oliveira,(19) 94296-7175,juliana.oliveira79@outlook.com,Recanto Moreira,Itobi,Facebook,2025-04-25
+54,Lívia Duarte,(11) 98071-5451,lívia.duarte73@outlook.com,"Esplanada Farias, 57",São José do Rio Pardo,Instagram,2026-03-29
+55,Sophie Abreu,(35)95977-0348,sophie.abreu36@gmail.com,"Quadra de Jesus, 4",Mococa,Panfleto,2026-03-31
+56,João Pedro Macedo,11986131712,joão.macedo3@gmail.com,"Condomínio Benjamin Pires, 532",Mococa,Facebook,2025-07-29
+57,Lavínia Moraes,(35) 96398-2146,lavínia.moraes90@outlook.com,"Pátio Maria Sophia Melo, 97",Aguaí,Instagram,2025-04-11
+58,Dr. Alexandre da Paz,+55 19 95886-7533,dr..paz76@yahoo.com.br,"Trecho Mariana Cassiano, 88",Casa Branca,Instagram,2025-07-13
+59,Maria Isis da Conceição,11905766270,,,Vargem Grande do Sul,Cliente antigo,2024-01-31
+60,Theodoro Pastor,(19) 92174-5961,theodoro.pastor7@yahoo.com.br,"Praia Brito, 370",Aguaí,Site,2026-04-07
+61,Dr. Liam Pires,(16) 93161-1724,dr..pires11@hotmail.com,"Setor Brayan Pinto, 4",Itobi,Instagram,2026-06-09
+62,Augusto Duarte,(35) 98692-2219,augusto.duarte73@gmail.com,"Lago Fogaça, 36",Mococa,Instagram,2024-12-27
+63,Isabella Monteiro,(16) 97482-1759,isabella.monteiro53@outlook.com,"Fazenda Martins, 57",São João da Boa Vista,Instagram,2025-02-14
+64,Otávio Sales,+55 35 99594-4064,otávio.sales81@hotmail.com,"Lagoa Miguel Gomes, 41",Vargem Grande do Sul,Facebook,2024-04-21
+65,Benicio Pereira,(16) 92104-7095,benicio.pereira37@outlook.com,"Lago Raul Pereira, 43",Espírito Santo do Pinhal,Facebook,2026-04-24
+66,Srta. Ayla da Rocha,35962328588,srta..rocha42@yahoo.com.br,,Itobi,Indicação,2025-01-06
+67,Enzo da Cunha,(11)96851-6048,enzo.cunha24@outlook.com,"Lago Camila Camargo, 31",Aguaí,Cliente antigo,2025-06-16
+68,Rafael Freitas,(11) 97098-5931,rafael.freitas89@outlook.com,"Viela de da Luz, 265",Águas da Prata,Indicação,2026-01-21
+69,Nicole Sampaio,(16)97113-8267,nicole.sampaio66@gmail.com,"Pátio de Camargo, 10",Espírito Santo do Pinhal,Indicação,2024-07-23
+70,Dr. Eduardo Leão,+55 35 93773-5158,dr..leão71@hotmail.com,"Residencial Pimenta, 14",Poços de Caldas,Indicação,2023-09-02
+71,Maria Alice Araújo,35905329318,,"Estrada Joaquim Marques, 4",Aguaí,Cliente antigo,2024-03-01
+72,Henrique da Conceição,35 21020539,henrique.conceição35@outlook.com,"Trevo Abreu, 32",Mococa,Cliente antigo,2026-08-06
+73,Sr. Erick da Luz,+55 11 91775-8917,sr..luz9@yahoo.com.br,Pátio Moura,São José do Rio Pardo,Facebook,2023-07-10
+74,Hellena Pimenta,35 70076617,hellena.pimenta20@outlook.com,Viaduto de Moreira,Águas da Prata,Site,2026-01-22
+75,Sra. Ana Sophia Barros,(19) 96984-7896,sra..barros53@gmail.com,"Distrito de Azevedo, 94",Espírito Santo do Pinhal,Site,2024-05-11
+76,Danilo Rezende,(35) 97661-5654,danilo.rezende13@outlook.com,"Favela de Lopes, 73",São João da Boa Vista,Indicação,2025-10-21
+77,Sr. Renan Azevedo,16 52809885,sr..azevedo80@outlook.com,Chácara Lopes,Águas da Prata,Site,2025-04-13
+78,Camila Jesus,19951983273,,"Praça de Silveira, 5",Mococa,Indicação,2025-12-09
+79,Luiz Fernando Novais,(16)99402-4455,luiz.novais6@yahoo.com.br,"Ladeira Oliveira, 96",São José do Rio Pardo,Panfleto,2024-04-28
+80,Fernando Casa Grande,11966752545,fernando.grande11@outlook.com,"Passarela de Azevedo, 20",Itobi,Indicação,2024-10-22
+81,Antonella Aragão,(16)96797-6438,antonella.aragão60@yahoo.com.br,"Vale Aragão, 5",Poços de Caldas,Google,2025-03-08
+82,Luiz Felipe Lopes,,luiz.lopes50@outlook.com,Viela Mariah Moura,São José do Rio Pardo,Facebook,2025-02-28
+83,Lorena Aparecida,(35)94451-0762,lorena.aparecida2@gmail.com,"Trevo Daniel Abreu, 44",Casa Branca,Instagram,2025-06-25
+84,Mateus Nascimento,+55 11 96071-5969,mateus.nascimento85@hotmail.com,"Rodovia Novais, 71",São João da Boa Vista,Facebook,2025-12-23
+85,Maria Vitória da Rocha,+55 11 95161-3696,maria.rocha96@outlook.com,Alameda Aylla Cavalcante,Águas da Prata,Google,2026-06-26
+86,Anna Liz Gonçalves,35 88355231,anna.gonçalves62@yahoo.com.br,"Loteamento Pedro Miguel Farias, 91",Aguaí,Cliente antigo,2023-12-06
+87,José Miguel Costa,(11)97997-9955,josé.costa72@yahoo.com.br,"Distrito de Teixeira, 3",Casa Branca,Indicação,2026-01-21
+88,Pedro Lucas Azevedo,16 81477005,pedro.azevedo14@hotmail.com,"Vereda Ana Júlia Vieira, 19",Águas da Prata,Google,2024-09-30
+89,Breno Ramos,35979359782,breno.ramos18@gmail.com,"Vale Peixoto, 967",Poços de Caldas,Indicação,2024-01-20
+90,Rael Caldeira,(11) 97889-2554,rael.caldeira90@outlook.com,"Chácara Mirella Ramos, 40",Espírito Santo do Pinhal,Indicação,2026-04-02
+91,Maria Luísa Vasconcelos,35 86449251,maria.vasconcelos31@yahoo.com.br,"Trevo de Aragão, 61",Águas da Prata,Google,2023-11-06
+92,Cecília Ferreira,+55 35 98652-8168,cecília.ferreira12@hotmail.com,"Vila de Ribeiro, 22",São João da Boa Vista,Indicação,2025-05-18
+93,Sr. Luiz Miguel das Neves,(19) 92141-8880,sr..neves71@hotmail.com,"Loteamento Vargas, 43",Mococa,Google,2024-05-02
+94,Maitê Vargas,(35)97065-3794,maitê.vargas70@yahoo.com.br,"Trevo Garcia, 32",São João da Boa Vista,Indicação,04/08/2023
+95,Sra. Isabel Nascimento,19988623924,sra..nascimento17@outlook.com,"Recanto Mathias Freitas, 577",Poços de Caldas,Cliente antigo,2025-07-15
+96,Rodrigo Freitas,19978261375,rodrigo.freitas94@yahoo.com.br,"Rua Campos, 31",São João da Boa Vista,Cliente antigo,2025-10-04
+97,Oliver Aragão,11905152204,,"Núcleo de da Costa, 61",Aguaí,Indicação,2025-01-18
+98,Cecilia Teixeira,35928986143,cecilia.teixeira65@outlook.com,"Praia Anthony Barros, 5",Águas da Prata,Instagram,2025-12-01
+99,Davi Aragão,(16) 98932-4609,davi.aragão94@gmail.com,"Vereda Maria Cecília Azevedo, 8",Casa Branca,Google,2024-05-12
+100,Sr. Oliver Cirino,19988067065,,"Chácara de Moura, 91",Vargem Grande do Sul,Indicação,2026-08-28
+101,Antony Fogaça,(16) 90585-2772,antony.fogaça55@gmail.com,"Morro da Costa, 6",São José do Rio Pardo,Indicação,2026-05-09
+102,Benício Silva,,benício.silva48@gmail.com,"Área Ana Beatriz Costa, 4",Espírito Santo do Pinhal,Indicação,2025-01-02
+103,Levi das Neves,(19) 96874-0345,levi.neves44@yahoo.com.br,,Itobi,Site,2023-11-24
+104,Lucas da Mata,(19)96527-7584,lucas.mata59@yahoo.com.br,Praça Isabelly Souza,São José do Rio Pardo,Indicação,2023-10-20
+105,Otávio Barros,(11)95447-9627,otávio.barros63@outlook.com,"Estação de Nogueira, 25",Águas da Prata,Indicação,2025-06-10
+106,Dr. Asafe Siqueira,+55 35 95820-2970,dr..siqueira40@gmail.com,"Vale Luara da Mota, 2",São João da Boa Vista,Indicação,2024-08-26
+107,Bernardo da Costa,(11) 97557-1928,bernardo.costa16@gmail.com,"Núcleo de Fonseca, 19",Vargem Grande do Sul,Site,2026-06-29
+108,Dr. Levi Rezende,(16) 93102-7868,,,São José do Rio Pardo,Panfleto,2026-09-21
+109,João Vasconcelos,16921727155,joão.vasconcelos22@outlook.com,"Praia de Cunha, 447",Aguaí,Panfleto,2024-02-06
+110,Srta. Ágatha da Rocha,11913237058,srta..rocha44@hotmail.com,"Vila Porto, 95",Águas da Prata,Indicação,2026-06-25
+111,Maria Eduarda Martins,16967866912,maria.martins19@hotmail.com,"Conjunto de Pimenta, 2",Vargem Grande do Sul,Indicação,2023-12-06
+112,Sr. Rael Martins,+55 11 98018-2422,sr..martins88@yahoo.com.br,"Morro de Cardoso, 392",Vargem Grande do Sul,Cliente antigo,2023-11-21
+113,Sr. Luiz Felipe Moreira,(19)98299-2299,sr..moreira10@yahoo.com.br,"Jardim Costa, 542",,Google,2025-02-11
+114,Sr. Arthur Barros,19996907844,sr..barros71@gmail.com,Travessa de da Luz,Mococa,Google,2026-03-05
+115,Isabelly Rodrigues,35967735925,isabelly.rodrigues92@gmail.com,"Quadra Diogo Sales, 3",Mococa,Cliente antigo,2025-12-20
+116,Sra. Manuella Guerra,(16) 97321-0469,sra..guerra44@gmail.com,"Rodovia Heitor Dias, 27",Aguaí,Google,2024-01-14
+117,Isadora Castro,(16) 97470-1687,isadora.castro78@hotmail.com,"Travessa Ana Sophia Correia, 97",Vargem Grande do Sul,Google,2025-03-31
+118,Henrique Pacheco,16980162456,,"Avenida da Paz, 89",São José do Rio Pardo,Indicação,17/06/2026
+119,Sr. Murilo Aragão,19978499121,sr..aragão28@yahoo.com.br,"Estrada de Fonseca, 741",Mococa,Indicação,2024-05-17
+120,Maria Fernanda Vieira,+55 35 98000-2578,maria.vieira68@gmail.com,"Núcleo de Sá, 93",Itobi,Indicação,2025-08-14
+121,Clarice Pereira,(16) 92595-2694,clarice.pereira22@outlook.com,,Mococa,Cliente antigo,2025-02-07
+122,Maitê Montenegro,16 51694097,maitê.montenegro61@hotmail.com,"Setor de Mendonça, 147",Poços de Caldas,Cliente antigo,2025-02-01
+123,Ian Silveira,(11) 99728-9623,ian.silveira18@yahoo.com.br,,São José do Rio Pardo,Indicação,2026-05-26
+124,Daniel Correia,(16) 93689-7028,daniel.correia66@hotmail.com,Largo Larissa Cassiano,Mococa,Cliente antigo,2025-06-19
+125,Luan Ribeiro,11 85497334,luan.ribeiro11@yahoo.com.br,"Parque de Dias, 97",Aguaí,Google,2024-04-29
+126,Letícia Câmara,35941986652,letícia.câmara98@outlook.com,"Favela Mariana Dias, 95",,Indicação,2023-08-12
+127,Asafe da Paz,(16)98484-2199,asafe.paz15@yahoo.com.br,"Morro Macedo, 47",Mococa,Panfleto,26/01/2026
+128,Joaquim Aragão,(35)95712-0826,joaquim.aragão31@hotmail.com,"Fazenda de Porto, 20",,Google,2024-11-08
+129,Olívia Mendes,+55 11 98026-2067,olívia.mendes9@gmail.com,"Lago Duarte, 20",Espírito Santo do Pinhal,Google,2024-12-05
+130,João Vitor Andrade,+55 11 97887-2874,joão.andrade81@gmail.com,Travessa Heitor Farias,São José do Rio Pardo,Indicação,2023-10-03
+131,Daniel Farias,+55 19 94932-9668,daniel.farias60@outlook.com,"Quadra de Ramos, 12",Aguaí,Cliente antigo,2023-09-18
+132,Sr. Murilo Rios,19 30463745,sr..rios40@outlook.com,Conjunto Mendes,Casa Branca,Indicação,2024-07-30
+133,Anthony da Luz,16926841459,anthony.luz48@outlook.com,"Vila Ravy Araújo, 8",Espírito Santo do Pinhal,Google,2024-07-21
+134,Henry Carvalho,(11)98339-1878,henry.carvalho11@outlook.com,"Quadra Souza, 956",Vargem Grande do Sul,Facebook,2025-04-22
+135,Sra. Ana Vitória Nunes,(19) 99822-5871,sra..nunes55@hotmail.com,Sítio Montenegro,São João da Boa Vista,Google,2025-12-11
+136,Gabrielly Silva,+55 35 98679-0874,gabrielly.silva96@hotmail.com,"Chácara Nina Machado, 8",Itobi,Cliente antigo,2023-09-14
+137,Srta. Maria Laura da Cunha,35951801704,srta..cunha73@gmail.com,"Favela Pacheco, 1",São José do Rio Pardo,Google,2025-12-30
+138,Emilly Vargas,+55 11 96567-6618,emilly.vargas32@gmail.com,,Águas da Prata,Site,2026-08-28
+139,Luiz Fernando Campos,16 47868633,luiz.campos89@outlook.com,"Passarela de Moura, 13",Aguaí,Cliente antigo,2024-06-22
+140,Manuella Cassiano,+55 35 93119-0790,manuella.cassiano41@yahoo.com.br,"Condomínio Andrade, 19",Casa Branca,Facebook,2024-05-22
+141,Augusto Guerra,(35)94395-9953,augusto.guerra26@hotmail.com,"Setor Cunha, 3",São José do Rio Pardo,Google,2026-02-16
+142,Diego Ribeiro,19968705685,diego.ribeiro92@outlook.com,"Pátio da Rosa, 90",Itobi,Indicação,2024-03-17
+143,Sra. Maria Luísa Cassiano,(11) 97086-6882,sra..cassiano71@hotmail.com,"Estação Stephany Melo, 53",Águas da Prata,Indicação,2024-03-15
+144,Isabelly da Cunha,19904699013,isabelly.cunha45@yahoo.com.br,"Via Emanuel Machado, 91",Águas da Prata,Facebook,2024-03-17
+145,Helena Mendes,(19) 99363-8546,helena.mendes20@hotmail.com,"Lagoa Arthur Cunha, 81",Itobi,Google,2026-09-01
+146,Yasmin Rezende,11953556093,yasmin.rezende34@hotmail.com,"Jardim Eloah Moraes, 27",São João da Boa Vista,Cliente antigo,2026-07-26
+147,Srta. Allana da Luz,(11)95369-3785,srta..luz39@outlook.com,"Trecho de Silveira, 34",Poços de Caldas,Panfleto,2026-03-22
+148,Samuel Silveira,(19) 98728-0801,samuel.silveira94@yahoo.com.br,"Residencial de Marques, 35",São José do Rio Pardo,Indicação,2025-04-18
+149,Ana Julia Teixeira,+55 35 90387-5099,,Conjunto Ravi Azevedo,Itobi,Panfleto,2024-11-24
+150,Raquel Almeida,,raquel.almeida25@hotmail.com,Sítio de Jesus,Poços de Caldas,Facebook,2026-04-18
+151,Antony Moura,+55 19 98233-9845,antony.moura31@hotmail.com,"Setor Allana Almeida, 262",Casa Branca,Cliente antigo,2026-02-22
+152,Miguel Barros,(11)91666-8700,miguel.barros94@yahoo.com.br,"Quadra Ryan Sampaio, 24",Espírito Santo do Pinhal,Indicação,2026-09-14
+153,Srta. Antonella Monteiro,16933974014,srta..monteiro98@yahoo.com.br,"Via Bianca Nunes, 9",Itobi,Indicação,2024-03-24
+154,Ana Beatriz Cavalcanti,+55 11 92939-6856,ana.cavalcanti47@hotmail.com,"Alameda Oliver Pastor, 26",Águas da Prata,Indicação,2023-10-05
+155,Srta. Anna Liz Montenegro,+55 16 95047-7358,srta..montenegro66@hotmail.com,"Avenida Gael Henrique Lopes, 61",Vargem Grande do Sul,Site,2025-03-08
+156,Marina Cirino,11 11426265,marina.cirino48@yahoo.com.br,"Viaduto de Garcia, 5",Itobi,Facebook,2023-08-28
+157,Sr. Caleb Abreu,(35) 97888-6101,sr..abreu74@hotmail.com,"Núcleo Vitor Hugo Caldeira, 31",Vargem Grande do Sul,Site,2024-05-02
+158,Sr. Luan Gomes,16 46618398,,,Vargem Grande do Sul,Panfleto,2024-08-25
+159,Mateus Cavalcante,35946471543,,"Lagoa Vitor Gabriel Monteiro, 31",São José do Rio Pardo,Cliente antigo,2026-06-15
+160,Dra. Sabrina Peixoto,+55 11 95965-7569,dra..peixoto87@yahoo.com.br,"Quadra Caldeira, 14",Mococa,Facebook,2026-08-20
+161,Kaique Duarte,16 47935646,kaique.duarte63@yahoo.com.br,"Estrada de Mendes, 72",Casa Branca,Facebook,2024-03-10
+162,Sr. Guilherme Pastor,(16) 94167-2434,sr..pastor99@hotmail.com,"Viela Vargas, 407",Aguaí,Google,2025-12-26
+163,Daniela Silva,(35)96805-8911,daniela.silva72@yahoo.com.br,"Campo Manuela Peixoto, 79",Itobi,Instagram,2024-11-12
+164,Luiz Gustavo Cavalcante,16901438889,luiz.cavalcante92@outlook.com,"Área de Nunes, 75",São João da Boa Vista,Instagram,2025-10-15
+165,Dra. Hellena Machado,19 46112545,dra..machado42@yahoo.com.br,"Quadra Melissa Cassiano, 80",Aguaí,Instagram,2026-07-04
+166,Gabrielly Moreira,(19) 90105-1238,gabrielly.moreira23@gmail.com,"Recanto Gael Macedo, 25",Poços de Caldas,Instagram,2025-02-16
+167,Yuri Castro,(16) 96609-3796,yuri.castro43@yahoo.com.br,"Praça de Martins, 36",Águas da Prata,Cliente antigo,2024-04-04
+168,Alana Santos,(35) 95537-1478,alana.santos94@outlook.com,"Ladeira Sá, 2",São João da Boa Vista,Google,2025-02-28
+169,Luara Peixoto,(35) 97924-9912,luara.peixoto55@yahoo.com.br,"Passarela de Pastor, 6",Vargem Grande do Sul,Indicação,2026-03-08
+170,Sr. Isaque das Neves,(19)98669-2966,sr..neves35@yahoo.com.br,Núcleo Sales,São João da Boa Vista,Facebook,2025-07-10
+171,Ryan Porto,35925790507,ryan.porto88@yahoo.com.br,"Via de Cavalcanti, 527",Casa Branca,Google,2024-09-29
+172,Gael Gomes,19972190340,gael.gomes48@outlook.com,"Via de Monteiro, 77",Águas da Prata,Instagram,2024-11-22
+173,Henry Gabriel Nascimento,(35) 99148-5807,henry.nascimento73@gmail.com,"Quadra Nunes, 98",Águas da Prata,Instagram,2026-09-19
+174,Helena Lima,16940745171,,Via de Sá,Aguaí,Cliente antigo,2023-10-26
+175,Gustavo Henrique Sousa,19930958498,gustavo.sousa40@gmail.com,"Morro de Santos, 362",Mococa,Indicação,2023-10-05
+176,Lorenzo Santos,16904223253,lorenzo.santos61@gmail.com,"Travessa Vitor Moraes, 3",Vargem Grande do Sul,Panfleto,2025-08-09
+177,Maria Júlia Mendonça,+55 35 91684-5775,maria.mendonça11@hotmail.com,"Vereda de da Mata, 86",Vargem Grande do Sul,Site,2026-06-22
+178,Agatha Vasconcelos,35 36374545,agatha.vasconcelos60@outlook.com,"Chácara de Siqueira, 25",Mococa,Cliente antigo,2025-06-12
+179,Caroline Nunes,19912770632,,"Loteamento Calebe Aparecida, 8",São João da Boa Vista,Instagram,2024-08-30
+180,Liz Castro,(11) 90643-6110,liz.castro32@gmail.com,"Chácara Eloah da Cunha, 6",Mococa,Indicação,2024-04-16
+181,Rhavi Barbosa,(19)91627-1361,rhavi.barbosa74@yahoo.com.br,"Fazenda de Moreira, 10",Águas da Prata,Instagram,2025-10-28
+182,Srta. Bella Dias,16992753269,srta..dias23@outlook.com,"Conjunto Giovanna Vasconcelos, 22",São José do Rio Pardo,Site,2026-06-13
+183,Melina Cunha,(16)99656-5234,melina.cunha69@outlook.com,Conjunto Sá,Vargem Grande do Sul,Cliente antigo,2023-10-31
+184,Antonella da Cruz,(35) 98983-6403,antonella.cruz27@yahoo.com.br,"Trevo de Silveira, 540",São José do Rio Pardo,Indicação,2026-07-05
+185,Maria Isis Camargo,(11) 92696-5827,maria.camargo6@gmail.com,"Vereda Diego Moura, 6",Águas da Prata,Instagram,2026-03-12
+186,Antony Pastor,+55 11 90684-8666,antony.pastor25@gmail.com,Jardim Cunha,Mococa,Instagram,2025-09-24
+187,Vitor Gabriel Nascimento,+55 16 92856-9146,vitor.nascimento46@yahoo.com.br,"Ladeira Barros, 91",Poços de Caldas,Cliente antigo,2024-01-22
+188,Srta. Ana Laura da Cruz,(16) 96179-9042,srta..cruz41@outlook.com,,Vargem Grande do Sul,Indicação,2024-12-20
+189,Anthony Gabriel Santos,16942524105,anthony.santos73@hotmail.com,"Aeroporto de Castro, 95",São José do Rio Pardo,Facebook,2026-03-31
+190,Júlia Moura,+55 19 98507-9252,júlia.moura18@outlook.com,Travessa Eduardo Monteiro,São João da Boa Vista,Indicação,2023-12-04
+191,Cauã Oliveira,(16)90756-2208,cauã.oliveira30@gmail.com,"Condomínio de da Conceição, 100",,Cliente antigo,07/08/2025
+192,Dra. Mariah Câmara,+55 16 93654-1951,dra..câmara53@gmail.com,,Águas da Prata,Facebook,2023-08-09
+193,Ana Júlia Cavalcanti,(16) 94518-7053,,"Área de Guerra, 8",Mococa,Facebook,2025-06-29
+194,Kevin Sousa,(16)92060-3850,kevin.sousa32@hotmail.com,"Quadra Freitas, 973",Aguaí,Indicação,2024-01-12
+195,Sr. Marcos Vinicius Sousa,19 24103865,,"Colônia Noah Moura, 86",Espírito Santo do Pinhal,Google,2026-09-05
+196,Antonella Pacheco,(11) 91990-6234,antonella.pacheco89@outlook.com,Conjunto de Porto,Casa Branca,Indicação,2024-07-06
+197,Levi Gonçalves,(16)93291-2127,levi.gonçalves92@outlook.com,"Largo de Dias, 44",Itobi,Instagram,2026-09-07
+198,Luara Jesus,+55 35 97474-1124,luara.jesus95@hotmail.com,Morro de Vargas,Aguaí,Google,2023-10-22
+199,Dra. Ana Cecília Cunha,16904420678,dra..cunha77@outlook.com,"Distrito Fernando Silva, 75",Casa Branca,Cliente antigo,2026-04-04
+200,Dra. Isadora Brito,+55 35 92365-1994,dra..brito11@yahoo.com.br,"Conjunto Campos, 1",Aguaí,Facebook,2024-05-15
+201,Antônio Azevedo,35972151070,,,São José do Rio Pardo,Facebook,2024-01-30
+202,Pedro Silveira,,pedro.silveira14@gmail.com,"Alameda Giovanna Rodrigues, 62",Itobi,Google,2025-08-31
+203,Francisco da Mota,11968701462,francisco.mota93@hotmail.com,"Distrito Bernardo Pimenta, 593",Espírito Santo do Pinhal,Instagram,2024-04-14
+204,Gabriela Ramos,35987598564,gabriela.ramos54@yahoo.com.br,"Feira de Pires, 606",Casa Branca,Instagram,2026-04-15
+205,Apollo Dias,(35) 99321-3348,,"Alameda Vasconcelos, 80",Espírito Santo do Pinhal,Google,2025-12-22
+206,Srta. Hellena Oliveira,(35) 99059-9293,srta..oliveira62@yahoo.com.br,"Morro Luiz Felipe Cavalcanti, 69",São José do Rio Pardo,Facebook,2026-04-05
+207,Ágatha das Neves,,ágatha.neves47@gmail.com,"Área Fernando Araújo, 49",Águas da Prata,Instagram,2026-08-04
+208,Vinicius Mendes,(11) 92500-2921,vinicius.mendes27@outlook.com,Vale Nathan Cardoso,Aguaí,Panfleto,2026-04-22
+209,Maria Clara Barbosa,16922675289,maria.barbosa49@gmail.com,"Viaduto de Gonçalves, 515",Itobi,Site,2026-07-03
+210,Sr. Erick Garcia,16 90295939,sr..garcia69@gmail.com,"Vila de da Rocha, 12",São José do Rio Pardo,Instagram,2023-10-03
+211,Theo Casa Grande,+55 16 95704-3315,theo.grande14@gmail.com,"Campo de da Costa, 35",Águas da Prata,Instagram,2026-01-02
+212,Cauê Silveira,11926765861,cauê.silveira45@gmail.com,Parque Macedo,Aguaí,Indicação,2024-04-20
+213,Heloisa Castro,(19) 91152-6218,heloisa.castro61@gmail.com,"Área da Rocha, 6",São José do Rio Pardo,Indicação,2025-03-10
+214,Lucca Peixoto,16 01533688,,"Alameda Lorena Rezende, 79",Mococa,Instagram,2026-08-08
+215,João Miguel da Rosa,(16) 95061-4973,joão.rosa24@hotmail.com,"Avenida Gonçalves, 387",São João da Boa Vista,Instagram,2026-01-10
+216,Apollo Costela,(16) 97741-8625,apollo.costela91@gmail.com,"Lago de Barros, 51",Águas da Prata,Instagram,2025-07-23
+217,Maria Eduarda Cirino,(16)99021-1586,maria.cirino82@yahoo.com.br,"Jardim Macedo, 44",Itobi,Indicação,2025-06-16
+218,Heloísa Novaes,35993741608,heloísa.novaes39@gmail.com,Rua Larissa Nascimento,Mococa,Facebook,2024-02-29
+219,Stella Oliveira,(35) 93206-1632,stella.oliveira50@outlook.com,"Distrito de Campos, 32",Vargem Grande do Sul,Instagram,2026-04-02
+220,Joana Dias,16987099861,,"Chácara Gomes, 668",,Indicação,2024-08-07
+221,Clarice Casa Grande,(11) 94856-4679,clarice.grande57@outlook.com,"Trecho de Teixeira, 2",Mococa,Facebook,2023-09-09
+222,Olívia Andrade,11930745054,olívia.andrade99@outlook.com,"Passarela João Pedro Pinto, 760",Aguaí,Facebook,2026-07-21
+223,João Lucas Mendonça,11 54691373,joão.mendonça57@hotmail.com,"Viela de Brito, 52",Mococa,Facebook,2023-09-09
+224,Raquel Teixeira,+55 35 96289-0233,raquel.teixeira16@hotmail.com,"Avenida Olívia Vieira, 51",São José do Rio Pardo,Panfleto,2024-06-08
+225,Josué Andrade,(19) 98610-3579,josué.andrade69@yahoo.com.br,"Núcleo Santos, 64",Casa Branca,Facebook,2026-09-19
+226,Emanuelly Melo,+55 35 90602-9333,emanuelly.melo8@yahoo.com.br,"Morro de Ferreira, 24",Vargem Grande do Sul,Instagram,2024-04-29
+227,Gabrielly da Mata,(11)92903-4944,gabrielly.mata74@yahoo.com.br,"Rodovia Asafe Vasconcelos, 8",Aguaí,Indicação,2025-10-07
+228,Maria Flor Ferreira,(16) 98589-9441,maria.ferreira63@yahoo.com.br,"Favela Maria Flor da Rosa, 296",Aguaí,Cliente antigo,2025-07-07
+229,Ana Luiza Fernandes,11 83096520,ana.fernandes35@yahoo.com.br,"Largo de da Mota, 44",Itobi,Indicação,2026-09-06
+230,Sara da Rocha,19 38758428,,"Passarela Hellena Sousa, 4",São João da Boa Vista,Indicação,2024-05-23
+231,Juan Brito,(11)95346-5549,juan.brito17@yahoo.com.br,"Jardim Silveira, 225",Casa Branca,Indicação,2025-07-12
+232,Ravi Campos,(19) 98168-4602,,"Vereda Pacheco, 891",Mococa,Panfleto,2024-01-07
+233,Guilherme Fernandes,35997252175,guilherme.fernandes67@outlook.com,,Aguaí,Panfleto,2024-03-31
+234,Emanuelly Dias,(35) 97129-6666,,"Aeroporto Machado, 33",Vargem Grande do Sul,Site,2024-04-02
+235,Maria Isis Abreu,19 05830033,maria.abreu22@outlook.com,Estrada de Siqueira,Vargem Grande do Sul,Panfleto,2025-12-27
+236,Sra. Luana Cardoso,(35)90447-8985,sra..cardoso94@outlook.com,Rodovia Ana Laura Cavalcante,Vargem Grande do Sul,Instagram,2025-01-22
+237,Catarina Fernandes,+55 35 92309-8215,catarina.fernandes89@gmail.com,"Estrada Lucas Guerra, 4",Casa Branca,Instagram,2026-05-30
+238,Dra. Ana Carolina Garcia,19901676184,,"Setor Calebe Peixoto, 2",Poços de Caldas,Site,2024-02-20
+239,Daniela Costela,16 49926189,daniela.costela41@hotmail.com,"Vereda de Albuquerque, 26",Espírito Santo do Pinhal,Google,2026-07-27
+240,João Miguel Camargo,16956420873,,"Residencial Costa, 934",São João da Boa Vista,Indicação,2025-09-27
+241,Sra. Luísa da Costa,(16)99721-8114,sra..costa69@hotmail.com,Viaduto Borges,Águas da Prata,Instagram,2024-05-18
+242,Isabel Marques,(16) 95611-0022,isabel.marques83@gmail.com,"Quadra Carlos Eduardo Brito, 50",Mococa,Indicação,2024-11-16
+243,Dr. Pedro Lucas Pinto,(19) 96746-7621,,"Chácara de Freitas, 22",Vargem Grande do Sul,Indicação,2023-07-30
+244,Bento Castro,(16) 92965-9027,bento.castro93@yahoo.com.br,Trecho Maria Sophia Nunes,Casa Branca,Indicação,2023-09-03
+245,Brenda Jesus,(35) 95889-1637,brenda.jesus74@gmail.com,"Campo da Luz, 90",São João da Boa Vista,Cliente antigo,2026-09-07
+246,Dr. Dom Novais,11921753540,dr..novais93@gmail.com,"Aeroporto Ramos, 88",São João da Boa Vista,Indicação,2024-11-16
+247,Heloisa Novaes,19977517016,heloisa.novaes5@outlook.com,"Passarela Ravy Barros, 87",São José do Rio Pardo,Facebook,2023-12-11
+248,Ana Carolina Novais,(16) 97550-3758,ana.novais67@gmail.com,"Chácara Vieira, 994",Poços de Caldas,Facebook,2025-04-01
+249,Olívia Silva,(35) 94885-1027,olívia.silva39@hotmail.com,"Praia Ian Brito, 60",Poços de Caldas,Instagram,2026-07-28
+250,Nicolas Caldeira,+55 16 97351-6091,,"Estrada de Correia, 7",São João da Boa Vista,Google,2023-07-07
+251,Natália Ribeiro,(19) 98697-8292,,"Conjunto de Monteiro, 9",Poços de Caldas,Indicação,2024-04-21
+252,Srta. Bella Gomes,(16) 96547-2269,srta..gomes53@yahoo.com.br,"Trevo de Duarte, 466",Itobi,Indicação,2026-05-05
+253,Dra. Sophie da Rosa,(35) 95228-8515,dra..rosa17@hotmail.com,"Sítio de Dias, 433",Espírito Santo do Pinhal,Google,2025-04-16
+254,Pietra Pacheco,11 10620034,pietra.pacheco75@gmail.com,"Pátio de Rocha, 146",Poços de Caldas,Google,2025-10-14
+255,João Pedro Rodrigues,(11) 95719-8386,joão.rodrigues34@gmail.com,"Avenida Sales, 93",Casa Branca,Indicação,2024-09-17
+256,Thomas Viana,(35) 96580-0439,thomas.viana51@gmail.com,"Lago de Sales, 7",Vargem Grande do Sul,Indicação,2025-10-10
+257,Heloisa Porto,(11)94721-2281,heloisa.porto16@gmail.com,"Via de Freitas, 489",Mococa,Indicação,2024-08-13
+258,Ana Cecília Lima,+55 16 95720-2590,,"Jardim de Cardoso, 59",Aguaí,Indicação,2023-11-14
+259,Liz Mendonça,(16)91583-2818,liz.mendonça43@gmail.com,,Vargem Grande do Sul,Panfleto,2025-09-20
+260,Oliver Nogueira,(16) 94398-7801,oliver.nogueira24@yahoo.com.br,"Chácara Cecília Câmara, 65",São João da Boa Vista,Instagram,2025-02-28
+261,Manuella Machado,(16) 91648-4085,manuella.machado26@hotmail.com,"Vale de Pinto, 60",São João da Boa Vista,Site,2025-07-09
+262,Sophia Machado,16904358112,sophia.machado35@hotmail.com,,São João da Boa Vista,Facebook,2023-11-01
+263,Yasmin Abreu,16986120750,yasmin.abreu21@gmail.com,"Favela Rios, 26",Águas da Prata,Indicação,2024-09-26
+264,Brayan Aragão,(35)97665-0618,brayan.aragão23@hotmail.com,"Sítio Diego Oliveira, 74",São José do Rio Pardo,Indicação,2025-06-24
+265,Benício Sá,19914491476,benício.sá64@yahoo.com.br,"Área de Sampaio, 6",,Indicação,23/10/2024
+266,Ana Melo,+55 35 94508-8210,ana.melo26@hotmail.com,"Fazenda de Carvalho, 58",São José do Rio Pardo,Indicação,2023-08-18
+267,Matteo Nascimento,35 22239431,matteo.nascimento10@yahoo.com.br,"Lagoa Costela, 73",Itobi,Indicação,2025-05-24
+268,Benjamim Sá,35939755231,benjamim.sá82@outlook.com,"Via Ísis Barbosa, 51",Águas da Prata,Google,2024-10-04
+269,Bernardo Correia,(35)95620-5336,bernardo.correia23@gmail.com,"Praia Bella Pimenta, 39",Espírito Santo do Pinhal,Indicação,2024-07-11
+270,Luiz Miguel Carvalho,(11) 97812-9142,luiz.carvalho43@gmail.com,"Loteamento de Mendes, 67",Vargem Grande do Sul,Indicação,2025-05-22
+271,Fernanda da Luz,16910809969,fernanda.luz14@gmail.com,,Espírito Santo do Pinhal,Instagram,2025-10-29
+272,Arthur Miguel Novaes,(19) 99427-8816,arthur.novaes74@hotmail.com,"Setor de Melo, 75",São João da Boa Vista,Facebook,2023-08-15
+273,Sr. Isaque Pimenta,16 75037314,sr..pimenta94@gmail.com,"Rodovia Carvalho, 32",Aguaí,Google,2026-03-19
+274,Sr. Asafe Rios,(11)95184-4989,sr..rios21@gmail.com,"Núcleo de Gomes, 17",Mococa,Panfleto,2026-08-12
+275,Marcos Vinicius Rezende,(16) 96557-7908,,"Trecho Eduardo Moreira, 46",Poços de Caldas,Indicação,2023-10-24
+276,Pedro Lucas Cavalcante,+55 11 92591-3651,pedro.cavalcante62@hotmail.com,"Rodovia Ramos, 33",Casa Branca,Indicação,2026-02-28
+277,Pietra Mendes,(19) 92992-2809,pietra.mendes34@gmail.com,"Esplanada de Ramos, 40",São José do Rio Pardo,Site,2025-07-30
+278,Benjamin Cavalcante,16 37977236,benjamin.cavalcante35@gmail.com,"Rua Guerra, 590",Aguaí,Indicação,2025-06-08
+279,Cecília Vieira,16 99136621,cecília.vieira50@outlook.com,"Vale Ribeiro, 642",Poços de Caldas,Instagram,2026-03-06
+280,Guilherme Moreira,(35) 97990-8811,guilherme.moreira67@hotmail.com,"Viela de Leão, 29",Vargem Grande do Sul,Instagram,2024-09-10
+281,Caroline Pereira,11 08637659,caroline.pereira26@hotmail.com,"Viela Rezende, 78",Aguaí,Indicação,2025-09-06
+282,Dra. Beatriz Lima,+55 19 94300-9818,dra..lima2@outlook.com,"Recanto Ravi Lucca Barros, 99",Itobi,Indicação,2024-02-06
+283,Marcos Vinicius Rezende,(16) 99448-6959,marcos.rezende53@yahoo.com.br,"Largo de Jesus, 31",Itobi,Cliente antigo,2023-09-19
+284,Miguel Sá,(11) 94495-6213,miguel.sá5@outlook.com,"Sítio Maria Sophia Cavalcanti, 98",Mococa,Indicação,2026-03-04
+285,Elisa Brito,+55 16 96012-7961,elisa.brito36@outlook.com,"Passarela de Viana, 18",Mococa,Indicação,2025-03-11
+286,João Câmara,19990277038,joão.câmara78@gmail.com,"Trevo Andrade, 96",Espírito Santo do Pinhal,Cliente antigo,2026-05-27
+287,Gael Andrade,+55 35 95302-1465,gael.andrade65@outlook.com,"Rodovia de Moreira, 39",Itobi,Indicação,2024-06-24
+288,Maria Laura Guerra,35989554393,maria.guerra47@hotmail.com,"Rua Albuquerque, 2",Águas da Prata,Site,2024-03-14
+289,Maria Luiza Oliveira,,maria.oliveira61@yahoo.com.br,Estação Joana Montenegro,Casa Branca,Indicação,2025-02-07
+290,Brayan Montenegro,,brayan.montenegro28@hotmail.com,"Condomínio Olivia da Cunha, 894",Casa Branca,Panfleto,2026-05-21
+291,Rafaela Vargas,+55 11 94163-3565,rafaela.vargas2@outlook.com,"Quadra Maria Clara Pastor, 8",Itobi,Indicação,2024-10-05
+292,Zoe Albuquerque,,zoe.albuquerque49@yahoo.com.br,"Feira Alícia Borges, 25",Casa Branca,Site,2024-01-30
+293,Emanuelly Melo,(11) 93433-3395,emanuelly.melo48@yahoo.com.br,"Favela Vitor Gabriel Cirino, 47",Aguaí,Google,2025-01-21
+294,Cauê Campos,(19)98075-9579,cauê.campos39@hotmail.com,Viaduto de Monteiro,São João da Boa Vista,Site,2025-04-19
+295,Samuel Cirino,(35)98678-0856,samuel.cirino54@outlook.com,"Ladeira de Gonçalves, 39",,Instagram,2025-06-06
+296,Emanuella Marques,+55 35 90036-9155,emanuella.marques86@yahoo.com.br,Rua de Marques,Águas da Prata,Instagram,2025-02-25
+297,Joana Cirino,11963655647,joana.cirino24@yahoo.com.br,"Feira Vitor Gabriel Melo, 355",Mococa,Facebook,2025-11-12
+298,Davi Lucca Oliveira,19 14386632,davi.oliveira16@outlook.com,,Itobi,Indicação,2026-02-26
+299,Srta. Olívia Albuquerque,+55 35 94890-6120,srta..albuquerque7@hotmail.com,"Residencial João Felipe Pires, 885",Espírito Santo do Pinhal,Cliente antigo,2024-04-23
+300,José Miguel Melo,(35)98845-0615,josé.melo23@yahoo.com.br,"Colônia de Machado, 64",,Facebook,2024-09-05
+301,Fernanda Oliveira,19987716947,fernanda.oliveira12@hotmail.com,"Via de Nascimento, 64",Espírito Santo do Pinhal,Panfleto,2026-03-08
+302,Clara Cavalcante,(11) 96996-1125,clara.cavalcante42@hotmail.com,,,Instagram,2024-10-10
+303,Levi Dias,11962202341,levi.dias40@hotmail.com,"Ladeira Isabela da Mata, 95",Casa Branca,Cliente antigo,2026-06-04
+304,Enzo Gonçalves,(35) 90681-1492,enzo.gonçalves63@yahoo.com.br,Campo Melo,Espírito Santo do Pinhal,Indicação,14/10/2024
+305,Mathias das Neves,(19)90055-7784,mathias.neves16@yahoo.com.br,"Lago Macedo, 92",Espírito Santo do Pinhal,Facebook,2026-07-04
+306,Melina Carvalho,(35) 95783-1745,,"Estação de Pastor, 779",Espírito Santo do Pinhal,Indicação,2026-07-29
+307,Joana Cassiano,19980774064,,"Aeroporto Moreira, 55",Águas da Prata,Facebook,2024-04-10
+308,Isabel Vieira,(11) 98663-2663,isabel.vieira14@outlook.com,Núcleo de Correia,Casa Branca,Instagram,2025-07-07
+309,Bruno Lima,(16) 96312-2417,bruno.lima89@outlook.com,"Rua Teixeira, 944",,Indicação,2024-02-16
+310,Milena da Mata,+55 19 98021-4427,milena.mata93@gmail.com,"Residencial de Correia, 30",Poços de Caldas,Facebook,2024-12-26
+311,Srta. Isabel Borges,(35) 95705-1204,srta..borges47@yahoo.com.br,"Residencial Cunha, 56",São João da Boa Vista,Indicação,2024-04-13
+312,Ana Sophia Nogueira,+55 11 96730-3718,ana.nogueira35@gmail.com,"Estrada da Cunha, 20",Aguaí,Site,2025-10-01
+313,Giovanna Melo,+55 16 91474-3503,giovanna.melo54@hotmail.com,"Lagoa de Duarte, 90",São João da Boa Vista,Instagram,2024-02-02
+314,Isaac Porto,16930097925,isaac.porto49@yahoo.com.br,"Aeroporto Lucas Gabriel Vieira, 29",Vargem Grande do Sul,Cliente antigo,2026-03-30
+315,Josué Castro,35928127358,josué.castro2@hotmail.com,"Viela Pinto, 10",São José do Rio Pardo,Indicação,2025-12-07
+316,Manuella Macedo,+55 19 90652-4077,manuella.macedo20@gmail.com,,Águas da Prata,Cliente antigo,2026-04-15
+317,Laís Nogueira,+55 16 99821-8274,laís.nogueira36@gmail.com,"Estrada Marcelo Nogueira, 85",Espírito Santo do Pinhal,Site,2024-10-28
+318,Vitor Hugo Fonseca,+55 19 99351-8638,vitor.fonseca58@yahoo.com.br,"Vereda Montenegro, 12",São João da Boa Vista,Indicação,2025-10-08
+319,Sara Vargas,+55 35 91810-2203,sara.vargas82@yahoo.com.br,"Vale da Paz, 66",Poços de Caldas,Google,2025-07-18
+320,Ryan Correia,(35) 97899-4053,ryan.correia77@outlook.com,Travessa Ramos,Poços de Caldas,Indicação,2024-01-20
+321,Ana Sophia Albuquerque,(16) 95094-8014,ana.albuquerque38@yahoo.com.br,"Residencial de Barros, 60",Vargem Grande do Sul,Cliente antigo,2024-04-17
+322,Henrique Moreira,+55 19 93383-9288,henrique.moreira51@hotmail.com,Fazenda Nascimento,São José do Rio Pardo,Indicação,2025-10-30
+323,Bianca Vargas,16 28685289,bianca.vargas65@hotmail.com,"Morro de Rocha, 26",,Indicação,2026-08-11
+324,Maria Dias,16 68457760,maria.dias89@hotmail.com,"Núcleo Júlia Teixeira, 45",Espírito Santo do Pinhal,Google,2026-05-02
+325,Srta. Larissa Peixoto,+55 11 94335-0488,srta..peixoto36@outlook.com,Conjunto de da Rosa,Poços de Caldas,Indicação,2024-04-12
+326,Daniela Brito,35959334419,daniela.brito95@hotmail.com,Morro Leonardo Carvalho,Casa Branca,Google,2024-04-01
+327,Helena Siqueira,(19) 92791-9409,helena.siqueira15@yahoo.com.br,Largo de Vieira,Espírito Santo do Pinhal,Facebook,2025-11-16
+328,Anna Liz Vasconcelos,(11) 93906-0480,anna.vasconcelos26@yahoo.com.br,Morro Luara Leão,Casa Branca,Facebook,2024-04-29
+329,Sr. Luan Montenegro,(11)93646-2251,sr..montenegro58@gmail.com,"Distrito Aragão, 97",Águas da Prata,Instagram,2026-08-27
+330,Ana Julia Novaes,+55 11 98376-9389,ana.novaes54@yahoo.com.br,"Chácara Isabelly Montenegro, 32",Casa Branca,Instagram,2025-12-28
+331,Bruno  Lima,(35) 93146-5911,bruno.lima89@outlook.com,"Rua Teixeira, 944",,Indicação,2024-06-30
+332,Isaque  Cardoso,+55 35 96553-5590,isaque.cardoso81@hotmail.com,"Condomínio de Nunes, 57",Espírito Santo do Pinhal,Instagram,2024-05-02
+333,Kevin  Sousa,(11)92597-9270,kevin.sousa32@hotmail.com,"Quadra Freitas, 973",Aguaí,Indicação,2024-05-13
+334,Lorena Aparecida,(11) 93521-1039,lorena.aparecida2@gmail.com,"Trevo Daniel Abreu, 44",Casa Branca,Instagram,2025-04-22
+335,Fernando  Casa Grande,(11)94051-4770,fernando.grande11@outlook.com,"Passarela de Azevedo, 20",Itobi,Indicação,2026-03-03
+336,Ana Sophia Albuquerque,11938338848,ana.albuquerque38@yahoo.com.br,"Residencial de Barros, 60",Vargem Grande do Sul,Cliente antigo,2025-08-09
+337,Dra.  Beatriz Lima,11992069804,dra..lima2@outlook.com,"Recanto Ravi Lucca Barros, 99",Itobi,Indicação,2026-09-06
+338,Sra. Isabel Nascimento,35904394070,sra..nascimento17@outlook.com,"Recanto Mathias Freitas, 577",Poços de Caldas,Cliente antigo,2025-07-03
+339,Ágatha  das Neves,35 64510463,ágatha.neves47@gmail.com,"Área Fernando Araújo, 49",Águas da Prata,Instagram,2025-11-10
+340,Sr.  Isaque das Neves,(11) 98157-9812,sr..neves35@yahoo.com.br,Núcleo Sales,São João da Boa Vista,Facebook,2026-02-09
+341,Laís Nogueira,(19) 98780-0384,laís.nogueira36@gmail.com,"Estrada Marcelo Nogueira, 85",Espírito Santo do Pinhal,Site,2024-12-20
+342,Ana  Luiza Fernandes,35 76205554,ana.fernandes35@yahoo.com.br,"Largo de da Mota, 44",Itobi,Indicação,2025-11-29
+343,Dra.  Hellena Machado,19984046084,dra..machado42@yahoo.com.br,"Quadra Melissa Cassiano, 80",Aguaí,Instagram,2025-07-07
