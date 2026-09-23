@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: gesso_drywall_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gesso_drywall}
+      POSTGRES_USER: ${POSTGRES_USER:-gesso_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gesso_pass}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # Volume nomeado: guarda os dados do banco entre reinicializações.
+      # Para "reconstruir do zero", basta remover este volume (make reset).
+      - db_data:/var/lib/postgresql/data
+      # Scripts em db/init são executados automaticamente na 1ª subida
+      # do container (quando o volume db_data ainda está vazio).
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gesso_user} -d ${POSTGRES_DB:-gesso_drywall}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer:4.8.1
+    container_name: gesso_drywall_adminer
+    restart: unless-stopped
+    ports:
+      - "${ADMINER_PORT:-8080}:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:
+    name: gesso_drywall_db_data
