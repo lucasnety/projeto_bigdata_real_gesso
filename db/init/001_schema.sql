@@ -9,6 +9,12 @@
 --
 -- Baseado no dicionário de dados definido na Entrega 01
 -- (Definição da Fonte e Fluxo de Dados).
+--
+-- Observação: colunas de data que recebem valores diretamente dos CSVs
+-- gerados (dados/raw/) ficam como VARCHAR, e não DATE/TIMESTAMP,
+-- porque o gerador cria formatos de data propositalmente inconsistentes
+-- (dd/mm/aaaa, aaaa-mm-dd, etc.) para serem padronizados na etapa de
+-- Análise Exploratória de Dados (AED) — ver dados/README.md.
 -- =====================================================================
 
 -- ---------------------------------------------------------------------
@@ -22,7 +28,7 @@ CREATE TABLE IF NOT EXISTS clientes (
     endereco          VARCHAR(200),
     cidade            VARCHAR(80),
     origem_contato    VARCHAR(50),
-    data_cadastro     DATE
+    data_cadastro     VARCHAR(20)
 );
 
 -- ---------------------------------------------------------------------
@@ -50,7 +56,7 @@ CREATE TABLE IF NOT EXISTS servicos (
     quantidade                  NUMERIC(10,2),
     valor_unitario_aplicado     NUMERIC(10,2),
     valor_total                 NUMERIC(12,2),
-    data_execucao                DATE,
+    data_execucao                VARCHAR(20),
     status                       VARCHAR(20)
 );
 
@@ -65,7 +71,7 @@ CREATE TABLE IF NOT EXISTS fotos (
     id_servico        INTEGER NOT NULL REFERENCES servicos(id_servico),
     caminho_arquivo   VARCHAR(255),
     descricao         VARCHAR(150),
-    data_upload       TIMESTAMP
+    data_upload       VARCHAR(30)
 );
 
 CREATE INDEX IF NOT EXISTS idx_fotos_servico ON fotos(id_servico);
@@ -79,8 +85,8 @@ CREATE TABLE IF NOT EXISTS manutencoes (
     id_servico_origem  INTEGER REFERENCES servicos(id_servico),
     descricao          TEXT,
     preco              NUMERIC(10,2),
-    data_solicitacao   DATE,
-    data_execucao      DATE,
+    data_solicitacao   VARCHAR(20),
+    data_execucao      VARCHAR(20),
     status             VARCHAR(20)
 );
 
