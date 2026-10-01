@@ -1,94 +1,61 @@
-# Projeto de Extensão — Big Data (Gesso e Drywall)
+---
 
-Projeto integrado da UNIFEOB (disciplinas de DevOps / AED / Análise e
-Visualização de Dados) para uma empresa de montagem e execução de
-serviços residenciais e industriais em **gesso e drywall**.
+# Checkpoint 01 — DevOps e Infraestrutura Privada (Projeto Integrado)
 
-Grupo:
-- João Victor Rocha Avello Correia — RA 24001368
-- Lucas Eduardo Cruz Alves — RA 25002040
-- Lucas Guimarães Castro Nunes — RA 23000143
-- Vitor Alexandre Rocetti Rinke — RA 25001968
+Infraestrutura privada mínima para executar o simulador de dados do
+Projeto Integrado (empresa de gesso/drywall), provisionada 100% por
+código: **OpenTofu** cria as máquinas virtuais, **cloud-init** faz a
+configuração inicial, e **Ansible** prepara o ambiente e instala o
+simulador.
 
-## Estrutura do projeto
+## Arquitetura
 
+- **devops1**: roda o simulador (`/opt/datasci`), gera os dados em
+  `/opt/datasci/dados/chamados_servico.csv` e os expõe por um nginx
+  interno na porta 8080.
+- **devops2**: só tem nginx, configurado como **proxy reverso na porta
+  80**, repassando tudo para o devops1.
+
+## Pré-requisitos (na máquina hospedeira)
+
+> Precisa rodar num **Linux de verdade** (boot nativo ou dual-boot),
+> **não dentro do WSL** — o WSL não garante acesso confiável à
+> virtualização por hardware (KVM) que o libvirt precisa.
+
+1. Linux com suporte a KVM:
+```bash
+   sudo apt update
+   sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst
+   sudo usermod -aG libvirt,kvm $USER
 ```
-.
-├── db/init/001_schema.sql   # schema Postgres (criado automaticamente no 1º up)
-├── docker-compose.yml       # serviços: Postgres + Adminer
-├── Makefile                 # atalhos (make up / down / reset / gerar / carregar)
-├── requirements.txt         # dependências Python
-├── .env.example              # modelo de variáveis de ambiente
-├── scripts/
-│   ├── provisionar.sh        # script único de provisionamento (Atividade 5)
-│   ├── gerador_dados.py      # simulador gerador de dados (Atividade 6)
-│   └── carregar_dados.py     # carrega os CSVs gerados no Postgres
-├── dados/
-│   └── raw/                  # 1º lote de dados brutos gerado pelo simulador
-└── docs/                     # documentos das entregas (.docx)
-```
+2. **OpenTofu**: https://opentofu.org/docs/intro/install/
+3. **Ansible**: `sudo apt install -y ansible`
+4. Par de chaves SSH: `ssh-keygen -t ed25519 -C "seu-nome" -f ~/.ssh/id_ed25519`
 
-## Pré-requisitos
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (inclui o Docker Compose)
-- Python 3.10+
-
-## Como provisionar o ambiente (Atividade 5)
-
-Tudo é feito por um único script, documentado e idempotente:
+## Como reproduzir a infraestrutura
 
 ```bash
-./scripts/provisionar.sh
+cd infraestrutura
+cp terraform.tfvars.example terraform.tfvars
+# edite terraform.tfvars e cole o conteúdo de `cat ~/.ssh/id_ed25519.pub`
+
+tofu init
+tofu plan
+tofu apply       # cria as VMs e gera ansible/inventory.ini automaticamente
+
+cd ansible
+ansible-playbook playbook.yml   # instala tudo e sobe o pipeline do simulador
 ```
 
-Isso cria o `.env`, o ambiente virtual Python, instala as dependências e
-sobe os serviços via Docker Compose (Postgres com o schema já criado +
-Adminer para inspecionar o banco pelo navegador).
-
-Para **reconstruir o ambiente do zero** (apaga os dados do Postgres e
-recria tudo):
+## Demonstração
 
 ```bash
-./scripts/provisionar.sh --reset
+ssh aluno@<ip-devops1> "cat /opt/datasci/dados/chamados_servico.csv"
+curl http://<ip-devops2>/chamados_servico.csv   # via proxy reverso, porta 80
 ```
 
-Alternativa equivalente usando `make` (ver `Makefile`):
+## Segurança
 
-```bash
-make setup    # cria venv + instala dependências
-make up       # sobe Postgres + Adminer
-make reset    # derruba tudo (incl. volume) e sobe de novo, do zero
-make down     # derruba os serviços
-```
-
-Depois de subir os serviços:
-- Postgres: `localhost:5432` (ver credenciais no `.env`)
-- Adminer (interface web do banco): http://localhost:8080
-  - Sistema: `PostgreSQL` · Servidor: `db` · Usuário/senha: os do `.env`
-
-## Como gerar os dados brutos (Atividade 6)
-
-```bash
-source .venv/bin/activate
-python scripts/gerador_dados.py
-```
-
-Isso gera (ou regenera, de forma reprodutível — mesma *seed* = mesmos
-dados) os arquivos em `dados/raw/`: `clientes.csv`, `preco_por_m.csv`,
-`servicos.csv`, `fotos.csv` e `manutencoes.csv`.
-
-Parâmetros disponíveis:
-
-```bash
-python scripts/gerador_dados.py --clientes 500 --servicos 2000 --seed 7
-```
-
-Para carregar os CSVs gerados dentro do Postgres provisionado:
-
-```bash
-python scripts/carregar_dados.py
-```
-
-## Documentação das entregas
-
-Os documentos acadêmicos de cada entrega semanal estão em `docs/`.
+Nenhuma senha, chave privada ou `terraform.tfvars` real está neste
+repositório — apenas os arquivos `.example`. Acesso às VMs é só por
+chave pública SSH (login por senha desativado pelo cloud-init).

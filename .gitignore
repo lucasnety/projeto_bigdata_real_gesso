@@ -1,15 +1,15 @@
-__pycache__/
-*.pyc
-.env
-.venv/
-venv/
-*.log
+# --- OpenTofu / Terraform (Checkpoint 01 - DevOps) ---
+infraestrutura/.terraform/
+infraestrutura/terraform.tfstate
+infraestrutura/terraform.tfstate.backup
+infraestrutura/*.tfplan
+infraestrutura/terraform.tfvars
+infraestrutura/crash.log
+infraestrutura/ansible/inventory.ini
 
-# Arquivos de sistema
-.DS_Store
-
-# Os CSVs gerados pelo simulador (dados/raw) NÃO são ignorados de propósito:
-# o primeiro lote gerado é entregue como parte da Atividade 6.
-# Caso queira regenerar localmente sem sujar o histórico do git, gere
-# em uma pasta separada (ex.: dados/local/) - já ignorada abaixo.
-dados/local/
+# --- SSH / segredos ---
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+!*.pub
