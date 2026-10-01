@@ -1,0 +1,10 @@
+# Copie este arquivo para terraform.tfvars (que é ignorado pelo git)
+# e preencha com a SUA chave pública SSH antes de rodar `tofu apply`.
+#
+# Para gerar um par de chaves novo (se ainda não tiver um):
+#   ssh-keygen -t ed25519 -C "seu-nome" -f ~/.ssh/id_ed25519
+#
+# Depois copie o conteúdo do arquivo .pub (chave PÚBLICA, nunca a privada):
+#   cat ~/.ssh/id_ed25519.pub
+
+ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... seu-usuario@sua-maquina"
