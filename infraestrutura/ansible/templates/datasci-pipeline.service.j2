@@ -1,0 +1,9 @@
+[Unit]
+Description=Pipeline do simulador de dados (Projeto Integrado - Data Science)
+After=network.target
+
+[Service]
+Type=oneshot
+User={{ admin_username }}
+WorkingDirectory={{ app_dir }}/app
+ExecStart={{ app_dir }}/venv/bin/python {{ app_dir }}/app/simulador.py --out-dir {{ app_dir }}/dados

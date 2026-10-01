@@ -1,0 +1,166 @@
+---
+# =====================================================================
+# Playbook de configuração das VMs do Projeto Integrado (Data Science)
+#
+#   - Todas as VMs: git, curl, python3, nginx
+#   - devops1: recebe o simulador (via módulo copy/synchronize do
+#     Ansible, que transfere por SSH), instala as dependências,
+#     cria /opt/datasci e um pipeline (systemd timer) que roda o
+#     simulador a cada 5 minutos, armazenando os dados gerados.
+#   - devops2: configura o nginx como proxy reverso na porta 80,
+#     repassando as requisições para o devops1.
+#
+# Reexecutar este playbook é seguro (idempotente) — nenhuma tarefa
+# recria algo que já existe nem apaga dados já gerados.
+# =====================================================================
+
+- name: Configuração base (todas as VMs)
+  hosts: all
+  become: true
+  vars:
+    admin_username: aluno
+
+  tasks:
+    - name: Atualizar cache do apt
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Instalar pacotes base (git, curl, nginx, python3)
+      ansible.builtin.apt:
+        name:
+          - git
+          - curl
+          - nginx
+          - python3
+          - python3-venv
+          - python3-pip
+        state: present
+
+    - name: Garantir que o nginx está habilitado
+      ansible.builtin.systemd:
+        name: nginx
+        enabled: true
+        state: started
+
+- name: Configurar devops1 — simulador de dados
+  hosts: devops1
+  become: true
+  vars:
+    admin_username: aluno
+    app_dir: /opt/datasci
+
+  tasks:
+    - name: Criar estrutura de diretórios da aplicação
+      ansible.builtin.file:
+        path: "{{ app_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0755"
+      loop:
+        - app
+        - dados
+
+    - name: Transferir o código do simulador para a VM (via SSH)
+      ansible.builtin.copy:
+        src: "../../simulador/"
+        dest: "{{ app_dir }}/app/"
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0644"
+
+    - name: Criar o ambiente virtual Python
+      ansible.builtin.command: python3 -m venv {{ app_dir }}/venv
+      args:
+        creates: "{{ app_dir }}/venv/bin/activate"
+
+    - name: Instalar as dependências do simulador (requirements.txt)
+      ansible.builtin.pip:
+        requirements: "{{ app_dir }}/app/requirements.txt"
+        virtualenv: "{{ app_dir }}/venv"
+      # requirements.txt pode estar vazio (o simulador usa só a
+      # biblioteca padrão do Python) — nesse caso o pip simplesmente
+      # não instala nada, sem gerar erro.
+
+    - name: Ajustar dono do ambiente virtual
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        recurse: true
+
+    - name: Executar o simulador uma vez, para validar a instalação
+      ansible.builtin.command: "{{ app_dir }}/venv/bin/python {{ app_dir }}/app/simulador.py --out-dir {{ app_dir }}/dados"
+      become_user: "{{ admin_username }}"
+      changed_when: true
+
+    - name: Criar o serviço systemd do pipeline
+      ansible.builtin.template:
+        src: templates/datasci-pipeline.service.j2
+        dest: /etc/systemd/system/datasci-pipeline.service
+        mode: "0644"
+
+    - name: Criar o timer systemd do pipeline (a cada 5 minutos)
+      ansible.builtin.template:
+        src: templates/datasci-pipeline.timer.j2
+        dest: /etc/systemd/system/datasci-pipeline.timer
+        mode: "0644"
+
+    - name: Habilitar e iniciar o timer do pipeline
+      ansible.builtin.systemd:
+        name: datasci-pipeline.timer
+        enabled: true
+        state: started
+        daemon_reload: true
+
+    - name: Configurar o nginx do devops1 (expõe os dados na porta 8080)
+      ansible.builtin.template:
+        src: templates/nginx-devops1.conf.j2
+        dest: /etc/nginx/sites-available/datasci
+        mode: "0644"
+
+    - name: Ativar o site do devops1
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/datasci
+        dest: /etc/nginx/sites-enabled/datasci
+        state: link
+
+    - name: Remover o site default do nginx
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Reiniciar o nginx do devops1
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted
+
+- name: Configurar devops2 — proxy reverso (porta 80)
+  hosts: devops2
+  become: true
+
+  tasks:
+    - name: Configurar o nginx como proxy reverso para o devops1
+      ansible.builtin.template:
+        src: templates/nginx-devops2.conf.j2
+        dest: /etc/nginx/sites-available/proxy
+        mode: "0644"
+      vars:
+        upstream_host: "{{ hostvars['devops1']['ansible_host'] }}"
+
+    - name: Ativar o site de proxy
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/proxy
+        dest: /etc/nginx/sites-enabled/proxy
+        state: link
+
+    - name: Remover o site default do nginx
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Reiniciar o nginx do devops2
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted

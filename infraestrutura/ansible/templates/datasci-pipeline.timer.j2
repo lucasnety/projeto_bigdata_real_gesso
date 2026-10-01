@@ -1,0 +1,10 @@
+[Unit]
+Description=Executa o pipeline do simulador de dados periodicamente
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=5min
+Unit=datasci-pipeline.service
+
+[Install]
+WantedBy=timers.target

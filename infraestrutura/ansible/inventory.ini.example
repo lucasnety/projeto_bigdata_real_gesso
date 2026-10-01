@@ -1,0 +1,15 @@
+; Exemplo de como o inventory.ini fica depois que o OpenTofu o gera
+; automaticamente (veja infraestrutura/main.tf, recurso local_file).
+; Os IPs reais variam a cada `tofu apply` — este arquivo é só ilustrativo.
+
+[devops1]
+devops1 ansible_host=10.20.30.11
+
+[devops2]
+devops2 ansible_host=10.20.30.12
+
+[all:vars]
+ansible_user=aluno
+ansible_ssh_private_key_file=~/.ssh/id_ed25519
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+ansible_python_interpreter=/usr/bin/python3

@@ -1,0 +1,16 @@
+id_chamado,cliente,cidade,tipo_servico,valor_estimado,status,data_hora_geracao
+95a6d46a,Cliente 0001,Águas da Prata,Divisória Drywall,3249.36,orçado,2026-10-01T00:57:13+00:00
+aade93e6,Cliente 0002,São João da Boa Vista,Moldura de Gesso,888.92,orçado,2026-10-01T00:57:13+00:00
+cd05e68d,Cliente 0003,Espírito Santo do Pinhal,Divisória Drywall,444.34,cancelado,2026-10-01T00:57:13+00:00
+e5186283,Cliente 0004,Itobi,Forro Drywall,2039.2,cancelado,2026-10-01T00:57:13+00:00
+73efac73,Cliente 0005,São João da Boa Vista,Moldura de Gesso,1121.85,em andamento,2026-10-01T00:57:13+00:00
+890e6820,Cliente 0006,São José do Rio Pardo,Manutenção,4726.53,orçado,2026-10-01T00:57:13+00:00
+dfa4f499,Cliente 0007,Espírito Santo do Pinhal,Moldura de Gesso,3263.94,em andamento,2026-10-01T00:57:13+00:00
+6a7bb159,Cliente 0008,São João da Boa Vista,Moldura de Gesso,6888.98,concluído,2026-10-01T00:57:13+00:00
+4536db66,Cliente 0009,Itobi,Divisória Drywall,4394.38,concluído,2026-10-01T00:57:13+00:00
+ec9a4623,Cliente 0010,Espírito Santo do Pinhal,Manutenção,1568.7,em andamento,2026-10-01T00:57:13+00:00
+26286754,Cliente 0011,Águas da Prata,Forro Drywall,4449.79,orçado,2026-10-01T00:57:13+00:00
+f0f45a25,Cliente 0012,Espírito Santo do Pinhal,Forro Drywall,5009.23,cancelado,2026-10-01T00:57:13+00:00
+e095ddad,Cliente 0013,São José do Rio Pardo,Moldura de Gesso,3506.6,concluído,2026-10-01T00:57:13+00:00
+1415c1ea,Cliente 0014,Itobi,Moldura de Gesso,7399.01,concluído,2026-10-01T00:57:13+00:00
+d5aa2a23,Cliente 0015,Águas da Prata,Divisória Drywall,6385.88,em andamento,2026-10-01T00:57:13+00:00

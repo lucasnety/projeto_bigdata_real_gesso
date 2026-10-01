@@ -1,0 +1,19 @@
+# devops1 — expõe o diretório de dados gerados pelo simulador
+# em uma porta interna (8080). Quem fica na porta 80 "pública" é o
+# devops2, que atua como proxy reverso (ver nginx-devops2.conf.j2).
+
+server {
+    listen 8080;
+    server_name devops1;
+
+    location / {
+        root {{ app_dir }}/dados;
+        autoindex on;
+        autoindex_format json;
+    }
+
+    location /health {
+        return 200 'devops1 ok\n';
+        add_header Content-Type text/plain;
+    }
+}
