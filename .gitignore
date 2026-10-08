@@ -6,6 +6,7 @@ infraestrutura/*.tfplan
 infraestrutura/terraform.tfvars
 infraestrutura/crash.log
 infraestrutura/ansible/inventory.ini
+dados/raw
 
 # --- SSH / segredos ---
 *.pem
