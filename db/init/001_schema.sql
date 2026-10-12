@@ -52,10 +52,15 @@ CREATE TABLE IF NOT EXISTS servicos (
     tipo_servico               VARCHAR(50) NOT NULL,
     subtipo                    VARCHAR(50) DEFAULT '',
     descricao_detalhada        TEXT,
+    tipo_imovel                 VARCHAR(20),
     unidade_medida              VARCHAR(20),
     quantidade                  NUMERIC(10,2),
     valor_unitario_aplicado     NUMERIC(10,2),
+    desconto_concedido          VARCHAR(10),
     valor_total                 NUMERIC(12,2),
+    data_orcamento               VARCHAR(20),
+    prazo_retorno_dias           INTEGER,
+    visita_tecnica               VARCHAR(5),
     data_execucao                VARCHAR(20),
     status                       VARCHAR(20)
 );
