@@ -6,7 +6,7 @@
 # Se preferir sem "make", os mesmos passos estão em scripts/provisionar.sh
 # =====================================================================
 
-.PHONY: setup up down reset logs status psql gerar carregar
+.PHONY: setup up down reset logs status psql gerar carregar preparar ml
 
 # Cria o ambiente virtual Python e instala as dependências
 setup:
@@ -53,3 +53,19 @@ gerar:
 # Carrega os CSVs gerados para dentro do Postgres
 carregar:
 	.venv/bin/python scripts/carregar_dados.py
+
+# Limpa os dados brutos e monta as bases dos modelos (dados/processed)
+preparar:
+	.venv/bin/python scripts/preparar_dados.py
+
+# Aprendizado de Máquina de ponta a ponta: gera os dados, recarrega o
+# banco, prepara as bases e executa os 5 notebooks (salvando os resultados).
+# Requer o banco no ar (make up). Se o schema mudou, rode antes: make reset
+ml:
+	.venv/bin/python scripts/gerador_dados.py
+	.venv/bin/python scripts/carregar_dados.py --substituir
+	.venv/bin/python scripts/preparar_dados.py
+	cd notebooks && for nb in 0*.ipynb; do \
+		../.venv/bin/jupyter nbconvert --to notebook --execute --inplace $$nb || exit 1; \
+	done
+	@echo "Notebooks executados em notebooks/ - resultados em dados/processed/"

@@ -4,3 +4,11 @@ numpy>=2.0.0
 python-dotenv==1.0.1
 SQLAlchemy>=2.0.36
 psycopg2-binary>=2.9.9
+
+# Aprendizado de Máquina (notebooks/)
+scikit-learn>=1.5
+matplotlib>=3.9
+shap>=0.46
+jupyter>=1.1
+nbconvert>=7.16
+ipykernel>=6.29
