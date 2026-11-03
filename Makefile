@@ -6,7 +6,7 @@
 # Se preferir sem "make", os mesmos passos estão em scripts/provisionar.sh
 # =====================================================================
 
-.PHONY: setup up down reset logs status psql gerar carregar
+.PHONY: setup up down reset logs status psql gerar carregar api hadoop hadoop-ligar
 
 # Cria o ambiente virtual Python e instala as dependências
 setup:
@@ -53,3 +53,42 @@ gerar:
 # Carrega os CSVs gerados para dentro do Postgres
 carregar:
 	.venv/bin/python scripts/carregar_dados.py
+
+# Sobe a API + front-end (Integração da Interface com a API)
+# Abra http://localhost:8000  |  documentação da API: http://localhost:8000/docs
+api:
+	.venv/bin/uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+
+# ---------------------------------------------------------------------
+# Hadoop (instalado em ~/opt) - MapReduce que conta os serviços por tipo
+# O resultado fica no HDFS e é lido pela API para o gráfico do Painel.
+# ---------------------------------------------------------------------
+HADOOP_HOME ?= $(HOME)/opt/hadoop
+JAVA_HOME   ?= $(HOME)/opt/jdk11
+export HADOOP_HOME JAVA_HOME
+HDFS   = $(HADOOP_HOME)/bin/hdfs
+YARN   = $(HADOOP_HOME)/bin/yarn
+HADOOP = $(HADOOP_HOME)/bin/hadoop
+
+# Liga HDFS + YARN (necessário depois de reiniciar o PC)
+hadoop-ligar:
+	-$(HDFS) --daemon start namenode
+	-$(HDFS) --daemon start datanode
+	-$(YARN) --daemon start resourcemanager
+	-$(YARN) --daemon start nodemanager
+	@echo "Aguardando o HDFS sair do modo de segurança..."
+	@$(HDFS) dfsadmin -safemode wait
+	@echo "Hadoop no ar: HDFS http://localhost:9870 | YARN http://localhost:8088"
+
+# Envia dados/raw/servicos.csv ao HDFS e roda o job (mapper.py + reducer.py)
+hadoop:
+	$(HDFS) dfs -mkdir -p /real_gesso/entrada
+	$(HDFS) dfs -put -f dados/raw/servicos.csv /real_gesso/entrada/
+	$(HDFS) dfs -rm -r -f /real_gesso/saida
+	$(HADOOP) jar $(HADOOP_HOME)/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+		-files scripts/hadoop/mapper.py,scripts/hadoop/reducer.py \
+		-mapper "python3 mapper.py" -reducer "python3 reducer.py" \
+		-input /real_gesso/entrada/servicos.csv -output /real_gesso/saida
+	@echo ""
+	@echo "=== Resultado (serviços por tipo) ==="
+	@$(HDFS) dfs -cat /real_gesso/saida/part-*

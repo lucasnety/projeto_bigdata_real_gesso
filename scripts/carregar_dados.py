@@ -74,6 +74,16 @@ def main():
             df.to_sql(nome_tabela, con=conn, if_exists="append", index=False)
             print(f"  {nome_tabela:<15} <- {len(df):>5} linhas ({caminho})")
 
+        # Os CSVs trazem os IDs prontos, então o contador (SERIAL) de cada
+        # tabela não avança sozinho. Sem isto, o próximo INSERT feito pela
+        # API tentaria usar o id 1 e falharia com chave duplicada.
+        for tabela, coluna in [("clientes", "id_cliente"), ("servicos", "id_servico"),
+                               ("fotos", "id_foto"), ("manutencoes", "id_manutencao")]:
+            conn.execute(text(
+                f"SELECT setval(pg_get_serial_sequence('{tabela}', '{coluna}'), "
+                f"COALESCE((SELECT MAX({coluna}) FROM {tabela}), 0) + 1, false)"
+            ))
+
     print("\nCarga concluída com sucesso.")
 
 
