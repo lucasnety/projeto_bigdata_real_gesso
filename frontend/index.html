@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Real Gesso — Gestão</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <span class="logo" aria-hidden="true">RG</span>
+      <div>
+        <strong>Real Gesso</strong>
+        <small>Gesso e drywall · gestão de serviços</small>
+      </div>
+    </div>
+    <nav class="abas" role="tablist">
+      <button role="tab" data-aba="painel" aria-selected="true">Painel</button>
+      <button role="tab" data-aba="clientes">Clientes</button>
+      <button role="tab" data-aba="servicos">Serviços</button>
+      <button role="tab" data-aba="manutencoes">Manutenções</button>
+      <button role="tab" data-aba="precos">Tabela de preços</button>
+    </nav>
+    <span id="status-api" class="status-api" title="Conexão com a API">● API</span>
+  </header>
+
+  <main>
+    <!-- ======================= PAINEL ======================= -->
+    <section id="aba-painel" class="aba ativa">
+      <div class="kpis" id="kpis"></div>
+      <div class="grade-2">
+        <article class="cartao">
+          <h2>Serviços por tipo</h2>
+          <p class="sub" id="sub-grafico">Carregando…</p>
+          <div class="aviso-hadoop" id="aviso-hadoop" hidden></div>
+          <div id="grafico-tipos" class="viz-root"></div>
+        </article>
+        <article class="cartao">
+          <h2>Serviços por status</h2>
+          <p class="sub">Status padronizados pela API (ex.: “CONCLUÍDO” e “Concluido” = concluído)</p>
+          <table class="tabela compacta" id="tabela-status"></table>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================= CLIENTES ======================= -->
+    <section id="aba-clientes" class="aba">
+      <div class="barra">
+        <input type="search" id="busca-clientes" placeholder="Buscar por nome, e-mail ou telefone…" aria-label="Buscar clientes">
+        <select id="filtro-cidade" aria-label="Filtrar por cidade"><option value="">Todas as cidades</option></select>
+        <button class="primario" data-novo="clientes">+ Novo cliente</button>
+      </div>
+      <div class="cartao sem-padding">
+        <table class="tabela">
+          <thead><tr><th>#</th><th>Nome</th><th>Telefone</th><th>E-mail</th><th>Cidade</th><th>Origem</th><th class="num">Serviços</th><th></th></tr></thead>
+          <tbody id="lista-clientes"></tbody>
+        </table>
+        <div class="paginacao" id="pag-clientes"></div>
+      </div>
+    </section>
+
+    <!-- ======================= SERVIÇOS ======================= -->
+    <section id="aba-servicos" class="aba">
+      <div class="barra">
+        <input type="search" id="busca-servicos" placeholder="Buscar por cliente ou descrição…" aria-label="Buscar serviços">
+        <select id="filtro-tipo" aria-label="Filtrar por tipo"><option value="">Todos os tipos</option></select>
+        <select id="filtro-status-servico" aria-label="Filtrar por status"><option value="">Todos os status</option></select>
+        <button class="primario" data-novo="servicos">+ Novo serviço</button>
+      </div>
+      <div class="cartao sem-padding">
+        <table class="tabela">
+          <thead><tr><th>#</th><th>Cliente</th><th>Serviço</th><th class="num">Qtd.</th><th class="num">Valor unit.</th><th class="num">Total</th><th>Execução</th><th>Status</th><th></th></tr></thead>
+          <tbody id="lista-servicos"></tbody>
+        </table>
+        <div class="paginacao" id="pag-servicos"></div>
+      </div>
+    </section>
+
+    <!-- ======================= MANUTENÇÕES ======================= -->
+    <section id="aba-manutencoes" class="aba">
+      <div class="barra">
+        <input type="search" id="busca-manutencoes" placeholder="Buscar por cliente ou problema…" aria-label="Buscar manutenções">
+        <select id="filtro-status-manutencao" aria-label="Filtrar por status"><option value="">Todos os status</option></select>
+        <button class="primario" data-novo="manutencoes">+ Nova manutenção</button>
+      </div>
+      <div class="cartao sem-padding">
+        <table class="tabela">
+          <thead><tr><th>#</th><th>Cliente</th><th>Problema</th><th>Serviço de origem</th><th class="num">Preço</th><th>Solicitação</th><th>Execução</th><th>Status</th><th></th></tr></thead>
+          <tbody id="lista-manutencoes"></tbody>
+        </table>
+        <div class="paginacao" id="pag-manutencoes"></div>
+      </div>
+    </section>
+
+    <!-- ======================= PREÇOS ======================= -->
+    <section id="aba-precos" class="aba">
+      <div class="cartao sem-padding">
+        <table class="tabela">
+          <thead><tr><th>Serviço</th><th>Subtipo</th><th>Unidade</th><th class="num">Valor</th></tr></thead>
+          <tbody id="lista-precos"></tbody>
+        </table>
+      </div>
+      <p class="nota">Gesso 3D e Boiserie são vendidos mas não têm preço oficial: no cadastro do serviço o valor unitário é obrigatório.</p>
+    </section>
+  </main>
+
+  <!-- ======================= FORMULÁRIOS (modal) ======================= -->
+  <dialog id="modal">
+    <form id="form" novalidate>
+      <header>
+        <h2 id="form-titulo">Novo</h2>
+        <button type="button" class="fechar" data-fechar aria-label="Fechar">×</button>
+      </header>
+      <div class="erro-geral" id="erro-geral" role="alert" hidden></div>
+      <div id="form-campos" class="campos"></div>
+      <footer>
+        <button type="button" data-fechar>Cancelar</button>
+        <button type="submit" class="primario" id="form-salvar">Salvar</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="confirmar" class="confirmar">
+    <p id="confirmar-texto"></p>
+    <footer>
+      <button type="button" data-resposta="nao">Cancelar</button>
+      <button type="button" class="perigo" data-resposta="sim">Excluir</button>
+    </footer>
+  </dialog>
+
+  <div id="avisos" class="avisos" aria-live="polite"></div>
+  <div id="tooltip" class="tooltip" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -14,3 +14,7 @@ dados/raw
 id_rsa*
 id_ed25519*
 !*.pub
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
