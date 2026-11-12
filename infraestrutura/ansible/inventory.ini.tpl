@@ -1,12 +1,14 @@
-; Gerado automaticamente pelo OpenTofu (recurso local_file em main.tf)
-; depois de `tofu apply`. NÃO editar à mão — e por isso este arquivo
-; (o inventory.ini final) fica fora do controle de versão (.gitignore).
-; Este .tpl (o modelo) é que fica versionado no repositório.
+; Inventário do Ansible - gerado automaticamente pelo OpenTofu (recurso
+; local_file em main.tf) toda vez que roda `tofu apply`, com o IP real de
+; cada VM. Este arquivo FICA NO REPOSITÓRIO (o Checkpoint 01 exige o
+; inventory e os playbooks versionados): faça commit do inventory.ini
+; gerado depois do apply para registrar as VMs usadas na entrega.
+; O modelo que gera este arquivo é o inventory.ini.tpl.
 
-[devops1]
+[simulador]
 devops1 ansible_host=${devops1_ip}
 
-[devops2]
+[proxy]
 devops2 ansible_host=${devops2_ip}
 
 [all:vars]

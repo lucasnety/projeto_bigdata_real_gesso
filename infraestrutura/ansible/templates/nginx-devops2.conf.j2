@@ -1,14 +1,30 @@
-# devops2 — proxy reverso na porta 80, repassando tudo para o nginx
-# interno do devops1 (porta 8080), que serve os dados do simulador.
+# devops2 — proxy reverso na porta 80.
+#
+#   /                      -> sistema completo (API + front-end) no devops1:8000
+#   /dados/...             -> dados gerados pelo simulador (nginx do devops1:8080)
+#   /chamados_servico.csv  -> atalho para o CSV do simulador (Checkpoint 01)
 
 server {
     listen 80 default_server;
     server_name devops2;
 
-    location / {
+    location /dados/ {
         proxy_pass http://{{ upstream_host }}:8080/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location = /chamados_servico.csv {
+        proxy_pass http://{{ upstream_host }}:8080/chamados_servico.csv;
+        proxy_set_header Host $host;
+    }
+
+    location / {
+        proxy_pass http://{{ upstream_host }}:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 60s;
     }
 }

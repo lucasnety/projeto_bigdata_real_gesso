@@ -1,16 +1,16 @@
 id_chamado,cliente,cidade,tipo_servico,valor_estimado,status,data_hora_geracao
-95a6d46a,Cliente 0001,Águas da Prata,Divisória Drywall,3249.36,orçado,2026-10-01T00:57:13+00:00
-aade93e6,Cliente 0002,São João da Boa Vista,Moldura de Gesso,888.92,orçado,2026-10-01T00:57:13+00:00
-cd05e68d,Cliente 0003,Espírito Santo do Pinhal,Divisória Drywall,444.34,cancelado,2026-10-01T00:57:13+00:00
-e5186283,Cliente 0004,Itobi,Forro Drywall,2039.2,cancelado,2026-10-01T00:57:13+00:00
-73efac73,Cliente 0005,São João da Boa Vista,Moldura de Gesso,1121.85,em andamento,2026-10-01T00:57:13+00:00
-890e6820,Cliente 0006,São José do Rio Pardo,Manutenção,4726.53,orçado,2026-10-01T00:57:13+00:00
-dfa4f499,Cliente 0007,Espírito Santo do Pinhal,Moldura de Gesso,3263.94,em andamento,2026-10-01T00:57:13+00:00
-6a7bb159,Cliente 0008,São João da Boa Vista,Moldura de Gesso,6888.98,concluído,2026-10-01T00:57:13+00:00
-4536db66,Cliente 0009,Itobi,Divisória Drywall,4394.38,concluído,2026-10-01T00:57:13+00:00
-ec9a4623,Cliente 0010,Espírito Santo do Pinhal,Manutenção,1568.7,em andamento,2026-10-01T00:57:13+00:00
-26286754,Cliente 0011,Águas da Prata,Forro Drywall,4449.79,orçado,2026-10-01T00:57:13+00:00
-f0f45a25,Cliente 0012,Espírito Santo do Pinhal,Forro Drywall,5009.23,cancelado,2026-10-01T00:57:13+00:00
-e095ddad,Cliente 0013,São José do Rio Pardo,Moldura de Gesso,3506.6,concluído,2026-10-01T00:57:13+00:00
-1415c1ea,Cliente 0014,Itobi,Moldura de Gesso,7399.01,concluído,2026-10-01T00:57:13+00:00
-d5aa2a23,Cliente 0015,Águas da Prata,Divisória Drywall,6385.88,em andamento,2026-10-01T00:57:13+00:00
+4cd6d80c,Cliente 0001,Casa Branca,Gesso 3D,2135.18,orçado,2026-11-12T23:07:02+00:00
+c87bec40,Cliente 0002,Águas da Prata,Gesso 3D,1930.35,em andamento,2026-11-12T23:07:02+00:00
+b60a76e6,Cliente 0003,Mococa,Sanca,353.95,concluído,2026-11-12T23:07:02+00:00
+3b20940e,Cliente 0004,Águas da Prata,Sanca,2155.91,em andamento,2026-11-12T23:07:02+00:00
+07ae0cb0,Cliente 0005,São João da Boa Vista,Moldura de Gesso,221.13,orçado,2026-11-12T23:07:02+00:00
+ce878723,Cliente 0006,Casa Branca,Gesso 3D,6116.95,em andamento,2026-11-12T23:07:02+00:00
+410e0513,Cliente 0007,Aguaí,Sanca,574.19,em andamento,2026-11-12T23:07:02+00:00
+f445ad1f,Cliente 0008,São João da Boa Vista,Moldura de Gesso,211.23,concluído,2026-11-12T23:07:02+00:00
+68d88e55,Cliente 0009,Espírito Santo do Pinhal,Sanca,3222.68,em andamento,2026-11-12T23:07:02+00:00
+7ff89cd6,Cliente 0010,São José do Rio Pardo,Boiserie,3916.65,concluído,2026-11-12T23:07:02+00:00
+f835f0bb,Cliente 0011,Mococa,Sanca,465.37,orçado,2026-11-12T23:07:02+00:00
+28cc2635,Cliente 0012,Aguaí,Boiserie,1646.23,em andamento,2026-11-12T23:07:02+00:00
+36f26a27,Cliente 0013,Vargem Grande do Sul,Gesso 3D,12141.24,orçado,2026-11-12T23:07:02+00:00
+ec2e6e20,Cliente 0014,Aguaí,Gesso 3D,4623.07,orçado,2026-11-12T23:07:02+00:00
+4b570ed8,Cliente 0015,Vargem Grande do Sul,Moldura de Gesso,463.13,em andamento,2026-11-12T23:07:02+00:00

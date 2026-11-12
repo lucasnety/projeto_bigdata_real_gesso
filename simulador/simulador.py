@@ -8,6 +8,15 @@ gesso/drywall do Projeto Integrado (mesma situação-problema usada nas
 demais atividades do grupo). Cada execução ANEXA novos registros ao
 arquivo CSV de saída — nunca sobrescreve o que já foi gerado antes.
 
+Papel no projeto (dois geradores, dois objetivos):
+  * simulador/simulador.py  -> fluxo CONTÍNUO de chamados, leve (só biblioteca
+    padrão), executado DENTRO da VM a cada rodada (systemd timer / Ansible).
+    É o dado do Checkpoint 01 (DevOps): prova que a VM gera e preserva dados.
+  * scripts/gerador_dados.py -> carga HISTÓRICA relacional (clientes, serviços,
+    fotos, manutenções), propositalmente suja, que passa pelo tratamento em R
+    (scripts/tratar_dados.R) antes de entrar no Postgres.
+Os dois usam o MESMO vocabulário: as mesmas cidades, tipos de serviço e status.
+
 Uso:
     python simulador.py --out-dir /opt/datasci/dados
     python simulador.py --out-dir /opt/datasci/dados --n 20
@@ -25,17 +34,27 @@ import random
 import uuid
 from datetime import datetime, timezone
 
+# Mesmas cidades do gerador (scripts/gerador_dados.py)
 CIDADES = [
-    "São João da Boa Vista", "Aguaí", "Águas da Prata", "Itobi",
-    "Espírito Santo do Pinhal", "São José do Rio Pardo", "Poços de Caldas",
+    "São João da Boa Vista", "Aguaí", "Vargem Grande do Sul", "Mococa",
+    "Casa Branca", "São José do Rio Pardo", "Espírito Santo do Pinhal",
+    "Poços de Caldas", "Águas da Prata", "Itobi",
 ]
 
-TIPOS_SERVICO = [
-    "Forro Drywall", "Divisória Drywall", "Sanca", "Gesso Liso",
-    "Moldura de Gesso", "Manutenção",
-]
+# tipo de serviço -> (preço de referência por m ou m², quantidade mínima, quantidade máxima)
+# Preços da tabela oficial (preco_por_m); Gesso Liso e Moldura usam a média dos subtipos.
+TIPOS_SERVICO = {
+    "Sanca":             (95.00, 3, 40),
+    "Divisória Drywall": (130.00, 4, 85),
+    "Forro Drywall":     (95.00, 4, 85),
+    "Gesso Liso":        (24.00, 4, 85),
+    "Moldura de Gesso":  (16.00, 3, 40),
+    "Gesso 3D":          (180.00, 4, 85),
+    "Boiserie":          (150.00, 3, 40),
+}
 
-STATUS = ["orçado", "em andamento", "concluído", "cancelado"]
+# Mesmos status de serviço do banco de dados
+STATUS = ["orçado", "em andamento", "concluído"]
 
 CAMPOS = [
     "id_chamado",
@@ -50,12 +69,16 @@ CAMPOS = [
 
 def gerar_registro(contador: int) -> dict:
     """Gera um registro fictício de chamado de serviço."""
+    tipo = random.choice(list(TIPOS_SERVICO))
+    preco, qtd_min, qtd_max = TIPOS_SERVICO[tipo]
+    quantidade = random.uniform(qtd_min, qtd_max)
     return {
         "id_chamado": str(uuid.uuid4())[:8],
         "cliente": f"Cliente {contador:04d}",
         "cidade": random.choice(CIDADES),
-        "tipo_servico": random.choice(TIPOS_SERVICO),
-        "valor_estimado": round(random.uniform(150.0, 8000.0), 2),
+        "tipo_servico": tipo,
+        # valor estimado = metragem sorteada x preço de referência (± 15% de negociação)
+        "valor_estimado": round(quantidade * preco * random.uniform(0.85, 1.10), 2),
         "status": random.choice(STATUS),
         # Informação temporal exigida pelo checkpoint: data/hora da geração
         "data_hora_geracao": datetime.now(timezone.utc).isoformat(timespec="seconds"),

@@ -1,0 +1,56 @@
+﻿tabela,regra,quantidade,acao
+clientes,nome com espacos repetidos/nas pontas,7,espacos normalizados
+clientes,nome vazio,0,registro mantido (revisar)
+clientes,telefone ausente,8,mantido vazio (nao inventado)
+clientes,"telefone fora do padrao (parenteses, +55, sem separador...)",221,padronizado
+clientes,telefone sem o 9o digito (10 digitos),37,formatado como (DD) XXXX-XXXX; digito nao inventado
+clientes,telefone invalido/nao reconhecido,0,descartado (vazio)
+clientes,e-mail ausente,38,mantido vazio
+clientes,e-mail em maiusculas,0,convertido para minusculas
+clientes,e-mail invalido,0,descartado (vazio)
+clientes,endereco ausente,16,mantido vazio
+clientes,cidade ausente,7,mantido vazio (cidade nao e deduzida)
+clientes,data de cadastro em dd/mm/aaaa,8,convertida para aaaa-mm-dd
+clientes,data de cadastro invalida/ausente,0,mantida vazia
+clientes,data de cadastro no futuro,0,mantida (revisar)
+clientes,clientes duplicados (mesmo nome+e-mail+endereco+cidade),13,unificados no menor id; servicos/manutencoes reapontados
+servicos,servicos ligados a cliente duplicado,57,id_cliente reapontado ao cliente mantido
+servicos,servicos com cliente inexistente (orfaos),0,mantidos e sinalizados (revisar)
+servicos,tipo_servico com grafia diferente (ex.: minusculas),52,padronizado para o nome oficial
+servicos,tipo_servico nao reconhecido,0,mantido o original (revisar)
+servicos,unidade_medida abreviada (m linear / m2),92,padronizada (metro linear / metro quadrado)
+servicos,unidade ausente/desconhecida,0,preenchida pela unidade padrao do tipo
+servicos,unidade incompativel com o tipo (ex.: sanca em m2),0,mantida (revisar)
+servicos,status com grafia diferente (Concluido/CONCLUIDO...),232,"padronizado (orcado / em andamento / concluido, com acento)"
+servicos,status nao reconhecido,0,mantido vazio (revisar)
+servicos,data_execucao em dd/mm/aaaa,33,convertida para aaaa-mm-dd
+servicos,data_execucao invalida/ausente,0,mantida vazia
+servicos,data_execucao no futuro,0,mantida (revisar)
+servicos,quantidade zero/negativa (erro de digitacao),19,quantidade e valor_total ficam vazios; sinalizado em servicos_qualidade.csv
+servicos,quantidade ausente,0,mantida vazia
+servicos,"valor unitario ausente (""a combinar"")",114,imputado e sinalizado (preco_imputado)
+servicos,  -> imputado pela tabela oficial de precos,101,origem_preco = tabela_oficial
+servicos,  -> imputado pela mediana do tipo (sem preco oficial),13,origem_preco = mediana_do_tipo
+servicos,tipos de servico sem linha na tabela oficial de precos,2,"tipos distintos (ex.: Gesso 3D, Boiserie) - recomenda-se cadastrar na tabela"
+servicos,"valor_total divergente de quantidade x valor unitario (>R$0,01)",0,recalculado
+servicos,valor_total ausente que pode ser calculado,113,calculado
+servicos,valor_total continua vazio (sem quantidade valida),19,mantido vazio
+servicos,outlier de quantidade (IQR por tipo),0,"sinalizado, nao removido"
+servicos,outlier de valor_total (IQR por tipo),0,"sinalizado, nao removido"
+servicos,preco informado >20% distante da referencia (tabela/mediana),0,"sinalizado, nao removido"
+fotos,data_upload em dd/mm/aaaa,0,convertida para aaaa-mm-dd
+fotos,data_upload invalida/ausente,0,mantida vazia
+fotos,descricao ausente,399,mantida vazia
+fotos,fotos duplicadas (mesmo servico + mesmo arquivo),15,removidas (mantida a 1a)
+fotos,fotos de servico inexistente (orfas),0,mantidas e sinalizadas (revisar)
+manutencoes,manutencoes ligadas a cliente duplicado,5,id_cliente reapontado ao cliente mantido
+manutencoes,sem servico de origem vinculado,28,mantido vazio (garantia sem vinculo)
+manutencoes,servico de origem inexistente,0,mantido e sinalizado (revisar)
+manutencoes,cliente diferente do cliente do servico de origem,0,mantido (revisar)
+manutencoes,preco ausente (garantia / a combinar),33,mantido vazio (nao imputado)
+manutencoes,preco zero ou negativo,0,mantido (revisar)
+manutencoes,datas em dd/mm/aaaa,0,convertidas para aaaa-mm-dd
+manutencoes,data_execucao anterior a data_solicitacao,0,mantida (revisar)
+manutencoes,status com grafia diferente,0,padronizado
+manutencoes,status nao reconhecido,0,mantido vazio (revisar)
+manutencoes,concluida sem data_execucao,0,mantida (revisar)
