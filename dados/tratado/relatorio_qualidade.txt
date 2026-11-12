@@ -1,0 +1,75 @@
+RELATORIO DE QUALIDADE DOS DADOS (gerado por scripts/tratar_dados.R)
+Data/hora: 2026-11-12 23:07:03
+
+Linhas por tabela (entrada -> saida):
+  clientes       343 ->   330
+  servicos      1600 ->  1600
+  fotos         2008 ->  1993
+  manutencoes    190 ->   190
+
+Correcoes e sinalizacoes:
+
+[CLIENTES]
+      7  nome com espacos repetidos/nas pontas  ->  espacos normalizados
+      0  nome vazio  ->  registro mantido (revisar)
+      8  telefone ausente  ->  mantido vazio (nao inventado)
+    221  telefone fora do padrao (parenteses, +55, sem separador...)  ->  padronizado
+     37  telefone sem o 9o digito (10 digitos)  ->  formatado como (DD) XXXX-XXXX; digito nao inventado
+      0  telefone invalido/nao reconhecido  ->  descartado (vazio)
+     38  e-mail ausente  ->  mantido vazio
+      0  e-mail em maiusculas  ->  convertido para minusculas
+      0  e-mail invalido  ->  descartado (vazio)
+     16  endereco ausente  ->  mantido vazio
+      7  cidade ausente  ->  mantido vazio (cidade nao e deduzida)
+      8  data de cadastro em dd/mm/aaaa  ->  convertida para aaaa-mm-dd
+      0  data de cadastro invalida/ausente  ->  mantida vazia
+      0  data de cadastro no futuro  ->  mantida (revisar)
+     13  clientes duplicados (mesmo nome+e-mail+endereco+cidade)  ->  unificados no menor id; servicos/manutencoes reapontados
+
+[SERVICOS]
+     57  servicos ligados a cliente duplicado  ->  id_cliente reapontado ao cliente mantido
+      0  servicos com cliente inexistente (orfaos)  ->  mantidos e sinalizados (revisar)
+     52  tipo_servico com grafia diferente (ex.: minusculas)  ->  padronizado para o nome oficial
+      0  tipo_servico nao reconhecido  ->  mantido o original (revisar)
+     92  unidade_medida abreviada (m linear / m2)  ->  padronizada (metro linear / metro quadrado)
+      0  unidade ausente/desconhecida  ->  preenchida pela unidade padrao do tipo
+      0  unidade incompativel com o tipo (ex.: sanca em m2)  ->  mantida (revisar)
+    232  status com grafia diferente (Concluido/CONCLUIDO...)  ->  padronizado (orcado / em andamento / concluido, com acento)
+      0  status nao reconhecido  ->  mantido vazio (revisar)
+     33  data_execucao em dd/mm/aaaa  ->  convertida para aaaa-mm-dd
+      0  data_execucao invalida/ausente  ->  mantida vazia
+      0  data_execucao no futuro  ->  mantida (revisar)
+     19  quantidade zero/negativa (erro de digitacao)  ->  quantidade e valor_total ficam vazios; sinalizado em servicos_qualidade.csv
+      0  quantidade ausente  ->  mantida vazia
+    114  valor unitario ausente ("a combinar")  ->  imputado e sinalizado (preco_imputado)
+    101    -> imputado pela tabela oficial de precos  ->  origem_preco = tabela_oficial
+     13    -> imputado pela mediana do tipo (sem preco oficial)  ->  origem_preco = mediana_do_tipo
+      2  tipos de servico sem linha na tabela oficial de precos  ->  tipos distintos (ex.: Gesso 3D, Boiserie) - recomenda-se cadastrar na tabela
+      0  valor_total divergente de quantidade x valor unitario (>R$0,01)  ->  recalculado
+    113  valor_total ausente que pode ser calculado  ->  calculado
+     19  valor_total continua vazio (sem quantidade valida)  ->  mantido vazio
+      0  outlier de quantidade (IQR por tipo)  ->  sinalizado, nao removido
+      0  outlier de valor_total (IQR por tipo)  ->  sinalizado, nao removido
+      0  preco informado >20% distante da referencia (tabela/mediana)  ->  sinalizado, nao removido
+
+[FOTOS]
+      0  data_upload em dd/mm/aaaa  ->  convertida para aaaa-mm-dd
+      0  data_upload invalida/ausente  ->  mantida vazia
+    399  descricao ausente  ->  mantida vazia
+     15  fotos duplicadas (mesmo servico + mesmo arquivo)  ->  removidas (mantida a 1a)
+      0  fotos de servico inexistente (orfas)  ->  mantidas e sinalizadas (revisar)
+
+[MANUTENCOES]
+      5  manutencoes ligadas a cliente duplicado  ->  id_cliente reapontado ao cliente mantido
+     28  sem servico de origem vinculado  ->  mantido vazio (garantia sem vinculo)
+      0  servico de origem inexistente  ->  mantido e sinalizado (revisar)
+      0  cliente diferente do cliente do servico de origem  ->  mantido (revisar)
+     33  preco ausente (garantia / a combinar)  ->  mantido vazio (nao imputado)
+      0  preco zero ou negativo  ->  mantido (revisar)
+      0  datas em dd/mm/aaaa  ->  convertidas para aaaa-mm-dd
+      0  data_execucao anterior a data_solicitacao  ->  mantida (revisar)
+      0  status com grafia diferente  ->  padronizado
+      0  status nao reconhecido  ->  mantido vazio (revisar)
+      0  concluida sem data_execucao  ->  mantida (revisar)
+
+Os arquivos de dados/raw NAO foram alterados.
