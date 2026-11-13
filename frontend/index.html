@@ -21,6 +21,7 @@
       <button role="tab" data-aba="servicos">Serviços</button>
       <button role="tab" data-aba="manutencoes">Manutenções</button>
       <button role="tab" data-aba="precos">Tabela de preços</button>
+      <button role="tab" data-aba="insights">Insights (ML)</button>
     </nav>
     <span id="status-api" class="status-api" title="Conexão com a API">● API</span>
   </header>
@@ -102,6 +103,51 @@
         </table>
       </div>
       <p class="nota">Gesso 3D e Boiserie são vendidos mas não têm preço oficial: no cadastro do serviço o valor unitário é obrigatório.</p>
+    </section>
+
+    <!-- ======================= INSIGHTS (MACHINE LEARNING) ======================= -->
+    <section id="aba-insights" class="aba">
+      <div class="aviso-hadoop bloco" id="aviso-ml" hidden></div>
+
+      <article class="cartao bloco">
+        <h2>Segmentação de clientes <span class="selo neutro">K-Means</span></h2>
+        <p class="sub" id="sub-segmentos">Carregando…</p>
+        <div id="grafico-segmentos" class="viz-root"></div>
+        <div class="rolagem"><table class="tabela compacta" id="tabela-segmentos"></table></div>
+      </article>
+
+      <div class="grade-eq bloco">
+        <article class="cartao">
+          <h2>Estimador de orçamento <span class="selo neutro">Random Forest</span></h2>
+          <p class="sub">Escolha o serviço e a quantidade: o modelo estima o valor e a faixa provável.</p>
+          <form id="form-estimador" class="estimador" novalidate>
+            <label class="largo"><span>Serviço</span>
+              <select id="est-servico" aria-label="Serviço"></select>
+            </label>
+            <label><span>Quantidade (<span id="est-unidade">—</span>)</span>
+              <input id="est-qtd" type="number" min="0.01" step="any" value="20" inputmode="decimal">
+            </label>
+            <label><span>Cidade</span>
+              <select id="est-cidade" aria-label="Cidade"></select>
+            </label>
+            <button type="submit" class="primario" id="est-botao">Estimar valor</button>
+          </form>
+          <div id="est-resultado" class="resultado-est" aria-live="polite"></div>
+        </article>
+
+        <article class="cartao">
+          <h2>Como o modelo decide</h2>
+          <p class="sub" id="sub-importancia">Carregando…</p>
+          <div id="grafico-importancia" class="viz-root"></div>
+          <div id="metricas-est" class="metricas"></div>
+        </article>
+      </div>
+
+      <article class="cartao bloco">
+        <h2>Maiores clientes</h2>
+        <p class="sub">Os 10 clientes que mais gastaram e o grupo em que cada um ficou.</p>
+        <div class="rolagem"><table class="tabela compacta" id="tabela-top"></table></div>
+      </article>
     </section>
   </main>
 

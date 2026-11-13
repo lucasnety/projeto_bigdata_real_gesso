@@ -600,15 +600,152 @@ $$("[data-novo]").forEach((b) => b.addEventListener("click", () => abrirForm(b.d
 $$("[data-fechar]").forEach((b) => b.addEventListener("click", () => $("#modal").close()));
 
 // =====================================================================
+// INSIGHTS (Machine Learning)
+// Os modelos são treinados por scripts/modelos_ml.py (passo 4 do pipeline);
+// a API só entrega os resultados em /api/ml/*.
+// =====================================================================
+const estadoMl = { estimador: null };
+
+/** Gráfico de barras horizontais (mesmo visual do painel). itens: {rotulo, valor, texto, dica} */
+function desenharBarras(el, itens, max) {
+  el.innerHTML = `<div class="barras">${itens.map((x) => `
+    <span class="rotulo">${esc(x.rotulo)}</span>
+    <div class="trilho" data-dica="${x.dica}"><div class="barra-v" style="width:${(x.valor / max) * 100}%"></div></div>
+    <span class="valor">${x.texto}</span>`).join("")}</div>`;
+}
+
+const quando = (iso) => new Date(iso).toLocaleString("pt-BR");
+const fmtR2 = (v) => v.toLocaleString("pt-BR", { minimumFractionDigits: 3, maximumFractionDigits: 4 });
+
+async function carregarSegmentos() {
+  const r = await api("GET", "/ml/segmentos");
+  $("#sub-segmentos").textContent =
+    `${r.metodo} · ${numero.format(r.clientes_analisados)} clientes em ${r.grupos} grupos · ` +
+    `silhueta ${numero.format(r.silhueta)} · treinado em ${quando(r.gerado_em)}`;
+
+  const max = Math.max(...r.segmentos.map((s) => s.clientes), 1);
+  desenharBarras($("#grafico-segmentos"), r.segmentos.map((s) => ({
+    rotulo: s.nome, valor: s.clientes,
+    texto: `${numero.format(s.clientes)} (${numero.format(s.pct_clientes)}%)`,
+    dica: `${esc(s.nome)}<br>${numero.format(s.clientes)} clientes<br>${numero.format(s.pct_faturamento)}% do faturamento`,
+  })), max);
+
+  $("#tabela-segmentos").innerHTML =
+    `<thead><tr><th>Grupo</th><th class="num">Clientes</th><th class="num">Serviços por cliente</th>
+      <th class="num">Gasto médio por cliente</th><th class="num">Valor por serviço</th>
+      <th class="num">Último serviço (dias atrás)</th><th class="num">% do faturamento</th></tr></thead><tbody>` +
+    r.segmentos.map((s) => `<tr><td><strong>${esc(s.nome)}</strong></td><td class="num">${numero.format(s.clientes)}</td>
+      <td class="num">${numero.format(s.frequencia_media)}</td><td class="num">${fmtMoeda(s.valor_medio)}</td>
+      <td class="num">${fmtMoeda(s.ticket_servico)}</td><td class="num">${numero.format(s.recencia_media_dias)}</td>
+      <td class="num">${numero.format(s.pct_faturamento)}%</td></tr>`).join("") + "</tbody>";
+
+  $("#tabela-top").innerHTML =
+    `<thead><tr><th>#</th><th>Cliente</th><th>Cidade</th><th class="num">Serviços</th><th class="num">Total gasto</th><th>Grupo</th></tr></thead><tbody>` +
+    r.top_clientes.map((c) => `<tr><td>${c.id_cliente}</td><td>${esc(c.nome)}</td><td>${esc(c.cidade)}</td>
+      <td class="num">${c.servicos}</td><td class="num">${fmtMoeda(c.valor)}</td>
+      <td><span class="selo neutro">${esc(c.segmento)}</span></td></tr>`).join("") + "</tbody>";
+}
+
+function rotuloServico(c) {
+  return `${c.tipo_servico}${c.subtipo ? " — " + c.subtipo : ""}`;
+}
+
+async function carregarEstimador() {
+  const e = await api("GET", "/ml/estimador");
+  estadoMl.estimador = e;
+
+  $("#est-servico").innerHTML = e.catalogo.map((c, i) => `<option value="${i}">${esc(rotuloServico(c))}</option>`).join("");
+  $("#est-cidade").innerHTML = `<option value="">Não informada</option>` + e.cidades
+    .filter((c) => c !== "Não informada").map((c) => `<option>${esc(c)}</option>`).join("");
+  const atualizarUnidade = () => { $("#est-unidade").textContent = e.catalogo[+$("#est-servico").value]?.unidade || "—"; };
+  $("#est-servico").onchange = atualizarUnidade;
+  atualizarUnidade();
+
+  // O que pesa no preço
+  $("#sub-importancia").textContent =
+    `${e.metodo} · treinado com ${numero.format(e.treino)} serviços · treinado em ${quando(e.gerado_em)}`;
+  desenharBarras($("#grafico-importancia"), e.importancia.map((i) => ({
+    rotulo: i.variavel, valor: i.pct, texto: `${numero.format(i.pct)}%`,
+    dica: `${esc(i.variavel)}<br>${numero.format(i.pct)}% da decisão do modelo`,
+  })), 100);
+
+  // Acerto do modelo, em dados que ele não viu, comparado a uma regra simples
+  const m = e.metricas_modelo, b = e.metricas_regra_media_do_tipo;
+  const melhor = b.erro_pct - m.erro_pct;
+  const conclusao = melhor > 0.05
+    ? `O modelo erra ${numero.format(melhor)} ponto(s) percentual(is) a menos que a regra simples.`
+    : `O modelo não é melhor que a regra simples: nesta base (dados simulados) o preço depende quase só do tipo de serviço, ` +
+      `e o valor real varia ao acaso em torno dele. Por isso o resultado vem com uma faixa.`;
+  $("#metricas-est").innerHTML = `
+    <table class="tabela compacta"><thead><tr><th>Teste em ${numero.format(e.teste)} serviços novos</th>
+      <th class="num">Erro médio</th><th class="num">Erro (%)</th><th class="num">R²</th></tr></thead><tbody>
+      <tr><td>Modelo (Random Forest)</td><td class="num">${fmtMoeda(m.mae)}</td><td class="num">${numero.format(m.erro_pct)}%</td><td class="num">${fmtR2(m.r2)}</td></tr>
+      <tr><td>Regra simples (média do tipo)</td><td class="num">${fmtMoeda(b.mae)}</td><td class="num">${numero.format(b.erro_pct)}%</td><td class="num">${fmtR2(b.r2)}</td></tr>
+    </tbody></table>
+    <p class="nota">${conclusao}</p>`;
+}
+
+$("#form-estimador").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const e = estadoMl.estimador;
+  const saida = $("#est-resultado");
+  if (!e) { saida.innerHTML = `<p class="erro-est">Os modelos ainda não foram carregados.</p>`; return; }
+  const item = e.catalogo[+$("#est-servico").value];
+  const params = new URLSearchParams({
+    tipo_servico: item.tipo_servico, subtipo: item.subtipo,
+    quantidade: $("#est-qtd").value, cidade: $("#est-cidade").value,
+  });
+  const botao = $("#est-botao");
+  botao.disabled = true;
+  try {
+    const r = await api("GET", "/ml/estimar?" + params);
+    const tabela = r.preco_tabela === null
+      ? `<span class="muted">sem preço oficial (serviço fora da tabela)</span>`
+      : `${fmtMoeda(r.preco_tabela)} / ${esc(r.unidade)}`;
+    saida.innerHTML = `
+      <div class="est-valor">${fmtMoeda(r.valor_estimado)}</div>
+      <div class="est-faixa">Faixa provável: <strong>${fmtMoeda(r.faixa_min)}</strong> a <strong>${fmtMoeda(r.faixa_max)}</strong>
+        <span class="muted">(90% dos orçamentos parecidos ficaram aqui)</span></div>
+      <dl class="est-lista">
+        <dt>Serviço</dt><dd>${esc(rotuloServico(r))}</dd>
+        <dt>Quantidade</dt><dd>${numero.format(r.quantidade)} ${esc(r.unidade)}</dd>
+        <dt>Preço unitário previsto</dt><dd>${fmtMoeda(r.preco_unitario)} / ${esc(r.unidade)}</dd>
+        <dt>Preço da tabela oficial</dt><dd>${tabela}</dd>
+      </dl>`;
+  } catch (err) {
+    saida.innerHTML = `<p class="erro-est">${esc(err.erros?.quantidade || err.erros?.tipo_servico || err.message)}</p>`;
+  } finally {
+    botao.disabled = false;
+  }
+});
+
+async function carregarInsights() {
+  const aviso = $("#aviso-ml");
+  aviso.hidden = true;
+  const resultados = await Promise.allSettled([carregarSegmentos(), carregarEstimador()]);
+  const falha = resultados.find((r) => r.status === "rejected");
+  if (falha) {
+    aviso.textContent = falha.reason?.message || "Não foi possível carregar os modelos de ML.";
+    aviso.hidden = false;
+  }
+}
+
+// =====================================================================
 // Abas, filtros e inicialização
 // =====================================================================
 const CARREGAR = {
   painel: carregarPainel, clientes: () => carregarClientes(),
   servicos: () => carregarServicos(), manutencoes: () => carregarManutencoes(), precos: carregarPrecos,
+  insights: carregarInsights,
 };
 
 function trocarAba(nome) {
-  $$(".abas button").forEach((b) => b.setAttribute("aria-selected", b.dataset.aba === nome));
+  $$(".abas button").forEach((b) => {
+    const ativa = b.dataset.aba === nome;
+    b.setAttribute("aria-selected", ativa);
+    // no celular as abas rolam na horizontal: mantém a aba ativa visível
+    if (ativa && b.scrollIntoView) b.scrollIntoView({ block: "nearest", inline: "center" });
+  });
   $$(".aba").forEach((s) => s.classList.toggle("ativa", s.id === "aba-" + nome));
   history.replaceState(null, "", "#" + nome);
   CARREGAR[nome]();

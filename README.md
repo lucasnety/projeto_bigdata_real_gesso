@@ -10,7 +10,9 @@ O fluxo de dados completo, executado **dentro da VM**, é:
 ```
 simulador ──► dados brutos ──► tratamento em R ──► dados tratados ──► PostgreSQL ──► API + front-end
 (Python)      dados/raw         scripts/            dados/tratado      (devops1)      (via proxy no devops2)
-                                tratar_dados.R
+                                tratar_dados.R                             │
+                                                                           └──► Machine Learning (scikit-learn) ──► aba "Insights (ML)"
+                                                                                scripts/modelos_ml.py → dados/modelos
 ```
 
 ## Arquitetura
@@ -84,24 +86,57 @@ configuração muda). Detalhes úteis:
 
 ```bash
 DATASCI_DB_PASSWORD='outrasenha' ansible-playbook playbook.yml   # senha do banco fora do repositório
-ansible-playbook playbook.yml -e recarregar_dados=true           # refaz gerar -> tratar -> carregar
+ansible-playbook playbook.yml -e recarregar_dados=true           # refaz gerar -> tratar -> carregar -> ML
 ansible-playbook playbook.yml --tags dados                       # só o pipeline de dados
 ```
 
 Atalhos equivalentes pelo `Makefile`: `make vm-up`, `make vm-config`,
 `make vm-verificar`, `make vm-down`.
 
-## Pipeline de dados (gerar → tratar em R → carregar)
+## Pipeline de dados (gerar → tratar em R → carregar → ML)
 
 | Etapa | Script | Entrada → saída |
 |---|---|---|
 | 1. Gerar | `scripts/gerador_dados.py` (Python, Faker, seed fixa) | → `dados/raw/*.csv` (bruto, **sujo de propósito**) |
 | 2. Tratar | `scripts/tratar_dados.R` (**R base**, sem pacotes extras) | `dados/raw` → `dados/tratado/*.csv` + relatório de qualidade |
 | 3. Carregar | `scripts/carregar_dados.py` | `dados/tratado` → tabelas do PostgreSQL |
+| 4. Machine Learning | `scripts/modelos_ml.py` (scikit-learn) | PostgreSQL → `dados/modelos/` (segmentos, estimador, métricas) |
 
-Na VM o Ansible executa as 3 etapas sozinho (só se o banco estiver vazio ou
-com `-e recarregar_dados=true`). Na sua máquina: `make pipeline`
-(precisa de R: `sudo apt install r-base-core`).
+Na VM o Ansible executa as 4 etapas sozinho (só se o banco estiver vazio, com
+`-e recarregar_dados=true`, ou se os modelos de ML ainda não existirem).
+Na sua máquina: `make pipeline` (precisa de R: `sudo apt install r-base-core`);
+só o passo 4: `make ml`.
+
+### Machine Learning (aba "Insights (ML)" do sistema)
+
+O passo 4 lê o PostgreSQL e gera dois resultados, mostrados no front-end
+(aba **Insights (ML)**) e servidos pela API em `/api/ml/*`:
+
+1. **Segmentação de clientes (K-Means sobre RFM).** Cada cliente é descrito por
+   recência (dias desde o último serviço), frequência (nº de serviços) e valor
+   (total gasto); as variáveis passam por `log1p` + padronização e o K-Means
+   (k = 4, semente 42) as separa em 4 grupos, nomeados por regra a partir do
+   perfil médio: *Grandes clientes*, *Clientes frequentes*, *Clientes inativos*
+   e o que sobra (*Clientes ocasionais*, ou *recentes* se for o que comprou há
+   menos tempo). A aba mostra o gráfico de
+   clientes e de faturamento por grupo, a tabela do perfil de cada grupo e os
+   10 maiores clientes. Qualidade medida pelo coeficiente de silhueta.
+2. **Estimador de orçamento (Random Forest).** O usuário escolhe serviço,
+   quantidade e cidade; o modelo prevê o **preço unitário** (valor = preço × quantidade),
+   mostra a **faixa de 90%** (quantis 5%–95% do erro em dados de teste) e compara com a
+   tabela oficial de preços. Treino 80% / teste 20%, comparado com um modelo
+   de referência simples ("média do tipo de serviço").
+
+> **Resultado honesto:** os dados são **simulados** e o preço depende quase só do
+> tipo/subtipo do serviço (mais ±15% de ruído aleatório). Por isso o Random Forest
+> (erro médio ≈ 1,8%, R² ≈ 0,998) **empata** com a média simples do tipo
+> (≈ 1,75%) e cidade/quantidade têm importância ≈ 0% — a aba mostra isso
+> abertamente. Com dados reais da empresa (preço variando com região, volume,
+> sazonalidade) é onde o modelo passaria a ter vantagem. Valores medidos com o lote de 100.000 serviços.
+
+Os modelos ficam em `dados/modelos/` (ignorado pelo Git, são regenerados pelo passo 4).
+A API os carrega sob demanda e recarrega sozinha quando os arquivos mudam; se ainda
+não foram treinados, a aba avisa "rode `make ml`" em vez de dar erro.
 
 O que o tratamento em R corrige (a contagem exata de cada regra sai em
 `dados/tratado/relatorio_qualidade.txt`, e `dados/raw` nunca é alterado):
@@ -154,8 +189,10 @@ Ele mostra: VMs e IPs; SSH por chave; **cloud-init aplicado** (hostname, usuári
 `aluno`, sudo, chave em `authorized_keys`, login por senha desativado e o arquivo
 `/etc/datasci-cloud-init.txt`); o que o Ansible instalou; uma **rodada do
 simulador** dentro da VM (≥ 10 registros novos e linhas antigas intactas); o
-relatório do tratamento em R e as tabelas no PostgreSQL; e o proxy do devops2
-respondendo `/`, `/api/resumo`, `/dados/` e `/chamados_servico.csv`.
+relatório do tratamento em R e as tabelas no PostgreSQL; o proxy do devops2
+respondendo `/`, `/api/resumo`, `/dados/` e `/chamados_servico.csv`; e o **Machine
+Learning** no ar (`/api/ml/segmentos`, `/api/ml/estimador` e uma estimativa de orçamento
+em `/api/ml/estimar`). A aba fica em `http://<ip-devops2>/#insights`.
 
 ```bash
 cd infraestrutura
@@ -238,7 +275,7 @@ navegador (frontend/)  --fetch-->  API /api/...  --SQL-->  Postgres
 
 ```bash
 ./scripts/provisionar.sh                       # sobe Postgres + Adminer e instala dependências
-make pipeline                                  # gerar (dados/raw) -> tratar em R (dados/tratado) -> carregar no Postgres
+make pipeline                                  # gerar (dados/raw) -> tratar em R (dados/tratado) -> carregar no Postgres -> ML (dados/modelos)
 # (sem R no PC? use o lote já tratado e versionado:  .venv/bin/python scripts/carregar_dados.py --substituir)
 make hadoop-ligar                              # liga HDFS + YARN (após reiniciar o PC)
 make hadoop                                    # envia dados/tratado/servicos.csv ao HDFS e roda o MapReduce
@@ -259,6 +296,9 @@ avisa quando o resultado do Hadoop está desatualizado em relação ao banco.
 |---|---|---|
 | GET | `/api/resumo` | Indicadores do painel |
 | GET | `/api/hadoop/servicos-por-tipo` | Resultado do MapReduce (lido do HDFS) |
+| GET | `/api/ml/segmentos` | Segmentação de clientes (K-Means/RFM): grupos, silhueta, top clientes |
+| GET | `/api/ml/estimador` | Métricas do estimador de orçamento, importância das variáveis e catálogo |
+| GET | `/api/ml/estimar` | Estimativa de orçamento: `tipo_servico`, `quantidade`, `subtipo`, `cidade` → valor + faixa de 90% |
 | GET | `/api/precos` | Tabela oficial de preços |
 | GET | `/api/opcoes` | Valores aceitos nos formulários |
 | GET/POST | `/api/clientes` | Lista (busca, cidade, paginação) / cadastra |
@@ -277,5 +317,7 @@ avisa quando o resultado do Hadoop está desatualizado em relação ao banco.
   validação exibidos no campo correspondente (422), conflitos (409, ex.: excluir
   cliente com serviços), não encontrado (404) e API fora do ar.
 - **Atualização da interface** após cada operação (lista, painel e selects).
+- **Aba "Insights (ML)"**: segmentação de clientes (gráfico + tabela + top 10) e
+  estimador de orçamento interativo, com a explicação de como o modelo decide.
 - Regras de negócio: preço puxado da tabela oficial, total calculado
   automaticamente, serviços sem preço oficial (Gesso 3D, Boiserie) exigem valor.

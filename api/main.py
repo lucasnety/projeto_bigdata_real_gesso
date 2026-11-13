@@ -771,6 +771,104 @@ def excluir_manutencao(id_manutencao: int):
     return {"detail": f"Manutenção {id_manutencao} excluída."}
 
 
+# =====================================================================
+# Machine Learning (modelos treinados por scripts/modelos_ml.py)
+# =====================================================================
+# O script grava em dados/modelos/ (passo 4 do pipeline). A API só LÊ esses
+# arquivos; quando o script roda de novo, a API percebe a mudança (data do
+# arquivo) e recarrega sozinha, sem precisar reiniciar.
+MODELOS_DIR = Path(os.getenv("MODELOS_DIR", RAIZ / "dados" / "modelos"))
+_cache_ml: dict = {}
+
+
+def _arquivo_ml(nome: str) -> Path:
+    caminho = MODELOS_DIR / nome
+    if not caminho.exists():
+        raise HTTPException(404, "Os modelos de ML ainda não foram treinados. Rode: make ml")
+    return caminho
+
+
+def _json_ml(nome: str):
+    caminho = _arquivo_ml(nome)
+    mtime = caminho.stat().st_mtime
+    em_cache = _cache_ml.get(nome)
+    if em_cache and em_cache[0] == mtime:
+        return em_cache[1]
+    dados = json.loads(caminho.read_text(encoding="utf-8"))
+    _cache_ml[nome] = (mtime, dados)
+    return dados
+
+
+def _modelo_estimador():
+    caminho = _arquivo_ml("modelo_estimador.joblib")
+    mtime = caminho.stat().st_mtime
+    em_cache = _cache_ml.get("modelo")
+    if em_cache and em_cache[0] == mtime:
+        return em_cache[1]
+    try:
+        import joblib  # importado só aqui: a API sobe mesmo sem scikit-learn instalado
+        modelo = joblib.load(caminho)
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(503, f"Não foi possível carregar o modelo (scikit-learn instalado? "
+                                 f"rode: pip install -r requirements.txt): {e}")
+    _cache_ml["modelo"] = (mtime, modelo)
+    return modelo
+
+
+@app.get("/api/ml/segmentos", tags=["Machine Learning"])
+def ml_segmentos():
+    """Segmentação de clientes (K-Means sobre recência, frequência e valor)."""
+    return _json_ml("segmentos.json")
+
+
+@app.get("/api/ml/estimador", tags=["Machine Learning"])
+def ml_estimador():
+    """Dados do estimador de orçamento: catálogo de serviços, métricas e importância das variáveis."""
+    return _json_ml("estimador.json")
+
+
+@app.get("/api/ml/estimar", tags=["Machine Learning"])
+def ml_estimar(tipo_servico: str, quantidade: float, subtipo: str = "", cidade: Optional[str] = None):
+    """Estima o valor de um orçamento: preço unitário previsto pelo modelo x quantidade."""
+    meta = _json_ml("estimador.json")
+    modelo = _modelo_estimador()
+    subtipo = _texto_limpo(subtipo) or ""
+
+    item = next((c for c in meta["catalogo"]
+                 if c["tipo_servico"].lower() == tipo_servico.strip().lower()
+                 and c["subtipo"].lower() == subtipo.lower()), None)
+    if item is None:
+        erro_campo("tipo_servico", "Serviço não reconhecido pelo modelo. Escolha um da lista.")
+    if not (0 < quantidade <= 100000):
+        erro_campo("quantidade", "Informe uma quantidade maior que zero (até 100.000).")
+
+    import pandas as pd
+    entrada = pd.DataFrame([{
+        "servico": f"{item['tipo_servico']}|{item['subtipo']}",
+        "cidade": _texto_limpo(cidade) or "Não informada",
+        "quantidade": float(quantidade),
+    }])
+    preco_unitario = float(modelo.predict(entrada)[0])
+    valor = preco_unitario * quantidade
+    faixa_min, faixa_max = meta["faixa_90"]
+
+    with engine.connect() as conn:
+        tabela = conn.execute(text(
+            "SELECT valor FROM preco_por_m WHERE lower(tipo_servico) = lower(:t) "
+            "AND lower(COALESCE(subtipo, '')) = lower(:s) LIMIT 1"
+        ), {"t": item["tipo_servico"], "s": item["subtipo"]}).scalar()
+
+    return {
+        "tipo_servico": item["tipo_servico"], "subtipo": item["subtipo"], "unidade": item["unidade"],
+        "quantidade": quantidade, "cidade": entrada.at[0, "cidade"],
+        "preco_unitario": round(preco_unitario, 2),
+        "valor_estimado": round(valor, 2),
+        "faixa_min": round(valor * faixa_min, 2), "faixa_max": round(valor * faixa_max, 2),
+        "preco_tabela": float(tabela) if tabela is not None else None,
+        "modelo_gerado_em": meta["gerado_em"],
+    }
+
+
 # ---------------------------------------------------------------------
 # Front-end (arquivos estáticos). Fica por último para não "engolir"
 # as rotas /api acima.

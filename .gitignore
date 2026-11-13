@@ -9,6 +9,8 @@ dados/raw
 # Lotes grandes (ex.: 100.000 serviços) são gerados na hora, não versionados
 dados/raw_*
 dados/tratado_*
+# Modelos de ML treinados (gerados por scripts/modelos_ml.py)
+dados/modelos/
 
 # --- SSH / segredos ---
 *.pem

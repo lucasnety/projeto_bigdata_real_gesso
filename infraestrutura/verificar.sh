@@ -15,6 +15,7 @@
 #      NÃO perde os dados antigos (compara as linhas antes e depois)
 #   5. O pipeline de dados rodou na VM: gerar -> tratar (R) -> carregar (Postgres)
 #   6. O proxy reverso do devops2 (porta 80) entrega o sistema e os dados
+#   6b. Machine Learning: segmentação de clientes e estimador de orçamento no ar
 #   7. (opcional) O playbook é idempotente: 2ª execução sem changed e sem failed
 #
 # A saída completa também é salva em infraestrutura/evidencias/ (pode ir no
@@ -30,7 +31,7 @@ IDEMPOTENCIA=0
 for arg in "$@"; do
   case "$arg" in
     --idempotencia) IDEMPOTENCIA=1 ;;
-    -h|--help) sed -n '2,22p' "${BASH_SOURCE[0]}"; exit 0 ;;
+    -h|--help) sed -n '2,23p' "${BASH_SOURCE[0]}"; exit 0 ;;
     *) echo "Opção desconhecida: $arg (use --help)"; exit 2 ;;
   esac
 done
@@ -223,6 +224,38 @@ else
   c="$(http "http://$IP2/chamados_servico.csv")";  [ "$c" = "200" ] && ok "GET /chamados_servico.csv  -> 200" || falha "GET /chamados_servico.csv -> $c"
   resumo="$(curl -s --max-time 10 "http://$IP2/api/resumo" 2>/dev/null | head -c 160)"
   [ -n "$resumo" ] && info "resposta de /api/resumo: $resumo ..."
+fi
+
+# ---------------------------------------------------------------------
+# 6b. Machine Learning (passo 4 do pipeline), servido pelo proxy do devops2
+# ---------------------------------------------------------------------
+secao "6b. Machine Learning (segmentação de clientes e estimador de orçamento)"
+if ! command -v curl >/dev/null 2>&1; then
+  falha "curl não está instalado no host"
+else
+  seg="$(curl -s --max-time 15 "http://$IP2/api/ml/segmentos" 2>/dev/null)"
+  n_seg="$(echo "$seg" | grep -o '"ticket_servico"' | wc -l)"
+  if [ "${n_seg:-0}" -ge 2 ]; then
+    ok "GET /api/ml/segmentos -> $n_seg grupos de clientes (K-Means)"
+  else
+    falha "GET /api/ml/segmentos não devolveu os grupos (o passo 4 do pipeline rodou? veja: ansible-playbook playbook.yml -e recarregar_dados=true)"
+  fi
+
+  est="$(curl -s --max-time 15 "http://$IP2/api/ml/estimador" 2>/dev/null)"
+  if echo "$est" | grep -q '"metricas_modelo"'; then
+    erro="$(echo "$est" | sed -n 's/.*"metricas_modelo":{[^}]*"erro_pct":\([0-9.]*\).*/\1/p')"
+    ok "GET /api/ml/estimador -> modelo treinado (erro médio ${erro:-?}% no valor do orçamento, em dados de teste)"
+  else
+    falha "GET /api/ml/estimador não devolveu as métricas do modelo"
+  fi
+
+  prev="$(curl -s --max-time 20 "http://$IP2/api/ml/estimar?tipo_servico=Sanca&quantidade=10" 2>/dev/null)"
+  valor_est="$(echo "$prev" | sed -n 's/.*"valor_estimado":\([0-9.]*\).*/\1/p')"
+  if [ -n "$valor_est" ] && awk -v v="$valor_est" 'BEGIN { exit !(v > 0) }'; then
+    ok "GET /api/ml/estimar (Sanca, 10 m) -> R\$ $valor_est estimados pelo modelo"
+  else
+    falha "GET /api/ml/estimar não devolveu um valor estimado: $(echo "$prev" | head -c 160)"
+  fi
 fi
 
 # ---------------------------------------------------------------------

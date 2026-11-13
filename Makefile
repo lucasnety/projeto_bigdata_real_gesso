@@ -6,7 +6,7 @@
 # Se preferir sem "make", os mesmos passos estão em scripts/provisionar.sh
 # =====================================================================
 
-.PHONY: setup up down reset logs status psql gerar tratar carregar pipeline pipeline-100k api hadoop hadoop-ligar vm-up vm-config vm-verificar vm-down
+.PHONY: setup up down reset logs status psql gerar tratar carregar ml pipeline pipeline-100k api hadoop hadoop-ligar vm-up vm-config vm-verificar vm-down
 
 # Cria o ambiente virtual Python e instala as dependências
 setup:
@@ -62,8 +62,13 @@ tratar:
 carregar:
 	.venv/bin/python scripts/carregar_dados.py --substituir
 
-# Os 3 passos em sequência
-pipeline: gerar tratar carregar
+# 4) Machine Learning: treina a segmentação de clientes e o estimador de orçamento
+#    (lê o Postgres e grava em dados/modelos; a API mostra na aba "Insights (ML)")
+ml:
+	.venv/bin/python scripts/modelos_ml.py
+
+# Os 4 passos em sequência
+pipeline: gerar tratar carregar ml
 
 # Volume grande (pedido do professor: 100.000 serviços). Usa pastas próprias
 # (dados/raw_100k e dados/tratado_100k, fora do Git) para não mexer no lote
@@ -76,6 +81,7 @@ pipeline-100k:
 	.venv/bin/python scripts/gerador_dados.py --clientes $(N_CLIENTES) --servicos $(N_SERVICOS) --manutencoes $(N_MANUTENCOES) --out-dir dados/raw_100k
 	Rscript scripts/tratar_dados.R --entrada dados/raw_100k --saida dados/tratado_100k
 	.venv/bin/python scripts/carregar_dados.py --dados-dir dados/tratado_100k --substituir
+	.venv/bin/python scripts/modelos_ml.py
 
 # Sobe a API + front-end (Integração da Interface com a API)
 # Abra http://localhost:8000  |  documentação da API: http://localhost:8000/docs
