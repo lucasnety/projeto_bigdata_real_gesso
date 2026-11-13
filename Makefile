@@ -6,7 +6,7 @@
 # Se preferir sem "make", os mesmos passos estão em scripts/provisionar.sh
 # =====================================================================
 
-.PHONY: setup up down reset logs status psql gerar tratar carregar pipeline api hadoop hadoop-ligar vm-up vm-config vm-verificar vm-down
+.PHONY: setup up down reset logs status psql gerar tratar carregar pipeline pipeline-100k api hadoop hadoop-ligar vm-up vm-config vm-verificar vm-down
 
 # Cria o ambiente virtual Python e instala as dependências
 setup:
@@ -64,6 +64,18 @@ carregar:
 
 # Os 3 passos em sequência
 pipeline: gerar tratar carregar
+
+# Volume grande (pedido do professor: 100.000 serviços). Usa pastas próprias
+# (dados/raw_100k e dados/tratado_100k, fora do Git) para não mexer no lote
+# pequeno versionado em dados/tratado. Ajuste os números pelas variáveis:
+#   make pipeline-100k N_SERVICOS=250000 N_CLIENTES=50000
+N_SERVICOS    ?= 100000
+N_CLIENTES    ?= 20000
+N_MANUTENCOES ?= 12000
+pipeline-100k:
+	.venv/bin/python scripts/gerador_dados.py --clientes $(N_CLIENTES) --servicos $(N_SERVICOS) --manutencoes $(N_MANUTENCOES) --out-dir dados/raw_100k
+	Rscript scripts/tratar_dados.R --entrada dados/raw_100k --saida dados/tratado_100k
+	.venv/bin/python scripts/carregar_dados.py --dados-dir dados/tratado_100k --substituir
 
 # Sobe a API + front-end (Integração da Interface com a API)
 # Abra http://localhost:8000  |  documentação da API: http://localhost:8000/docs

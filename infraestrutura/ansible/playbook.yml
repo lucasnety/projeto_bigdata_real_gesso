@@ -177,6 +177,13 @@
     api_port: 8000
     # true (via -e recarregar_dados=true) refaz gerar -> tratar -> carregar mesmo com o banco já populado
     recarregar_dados: false
+    # Tamanho do lote gerado pelo simulador (padrão = lote pequeno da demonstração).
+    # Para 100.000 serviços:
+    #   ansible-playbook playbook.yml -e recarregar_dados=true \
+    #     -e qtd_clientes=20000 -e qtd_servicos=100000 -e qtd_manutencoes=12000
+    qtd_clientes: 330
+    qtd_servicos: 1600
+    qtd_manutencoes: 190
     # O R precisa de locale UTF-8 para ler/gravar os acentos (SSH não carrega o locale do usuário)
     env_r:
       LC_ALL: C.UTF-8
@@ -375,7 +382,7 @@
 
     # --- Pipeline de dados dentro da VM:  gerar -> tratar (R) -> carregar ---
     - name: "Pipeline 1/3 - Gerar os dados brutos (gerador_dados.py -> dados/raw)"
-      ansible.builtin.command: "{{ venv_dir }}/bin/python scripts/gerador_dados.py --out-dir dados/raw"
+      ansible.builtin.command: "{{ venv_dir }}/bin/python scripts/gerador_dados.py --clientes {{ qtd_clientes }} --servicos {{ qtd_servicos }} --manutencoes {{ qtd_manutencoes }} --out-dir dados/raw"
       args:
         chdir: "{{ sistema_dir }}"
       become_user: "{{ admin_username }}"
