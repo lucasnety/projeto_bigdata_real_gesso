@@ -1,0 +1,95 @@
+Verificação do ambiente - 2026-11-12 21:09:51 - host: aluno-OptiPlex-SFF-Plus-7020
+
+=== 0. Inventário do Ansible (gerado pelo OpenTofu) ===
+[ OK  ] inventory.ini lido: devops1=10.20.30.248  devops2=10.20.30.130  usuário=aluno
+[INFO ] VMs vistas pelo libvirt (virsh list):
+         Id   Name      State
+        -------------------------
+         1    devops1   running
+         2    devops2   running
+        
+
+=== 1/2. devops1 (10.20.30.248) - acesso SSH e cloud-init ===
+[ OK  ] devops1: SSH por chave pública funcionando (usuário aluno, sem senha)
+[ OK  ] devops1: hostname definido pelo cloud-init = devops1
+[ OK  ] devops1: cloud-init concluído  (status: done)
+[ OK  ] devops1: usuário aluno com sudo sem senha
+[ OK  ] devops1: chave pública instalada em ~/.ssh/authorized_keys
+[ OK  ] devops1: login por senha desativado no SSH (passwordauthentication no)
+[ OK  ] devops1: arquivo de prova do cloud-init (/etc/datasci-cloud-init.txt):
+        Provisionada por cloud-init (OpenTofu) - Projeto Integrado Data Science
+        host=devops1 usuario=aluno login_por_senha=desativado
+        cloud-init aplicado em 2026-11-12T23:39:23Z
+
+=== 1/2. devops2 (10.20.30.130) - acesso SSH e cloud-init ===
+[ OK  ] devops2: SSH por chave pública funcionando (usuário aluno, sem senha)
+[ OK  ] devops2: hostname definido pelo cloud-init = devops2
+[ OK  ] devops2: cloud-init concluído  (status: done)
+[ OK  ] devops2: usuário aluno com sudo sem senha
+[ OK  ] devops2: chave pública instalada em ~/.ssh/authorized_keys
+[ OK  ] devops2: login por senha desativado no SSH (passwordauthentication no)
+[ OK  ] devops2: arquivo de prova do cloud-init (/etc/datasci-cloud-init.txt):
+        Provisionada por cloud-init (OpenTofu) - Projeto Integrado Data Science
+        host=devops2 usuario=aluno login_por_senha=desativado
+        cloud-init aplicado em 2026-11-12T23:39:03Z
+
+=== 3. devops1 - o que o Ansible instalou ===
+[ OK  ] existe: /opt/datasci/app/simulador.py
+[ OK  ] existe: /opt/datasci/app/requirements.txt
+[ OK  ] existe: /opt/datasci/venv/bin/python
+[ OK  ] existe: /opt/datasci/dados
+[ OK  ] existe: /opt/datasci/sistema/api/main.py
+[ OK  ] existe: /opt/datasci/sistema/scripts/tratar_dados.R
+[ OK  ] serviço ativo: datasci-pipeline.timer
+[ OK  ] serviço ativo: postgresql
+[ OK  ] serviço ativo: gesso-api
+[ OK  ] serviço ativo: nginx
+[ OK  ] R instalado: R scripting front-end version 4.1.2 (2021-11-01)
+[INFO ] próximas execuções do timer:
+        NEXT                        LEFT          LAST                        PASSED UNIT                   ACTIVATES
+        Thu 2026-11-12 21:14:51 -03 4min 53s left Thu 2026-11-12 21:09:51 -03 6s ago datasci-pipeline.timer datasci-pipeline.service
+        
+
+=== 4. devops1 - simulador: >= 10 registros por rodada e sem perder dados antigos ===
+[INFO ] antes da rodada: 121 linhas (inclui cabeçalho)
+[INFO ] disparando uma rodada do pipeline: systemctl start datasci-pipeline.service
+[INFO ] depois da rodada: 136 linhas
+[ OK  ] a rodada gerou 15 registros novos (mínimo exigido: 10)
+[ OK  ] dados antigos preservados (as 121 primeiras linhas continuam idênticas)
+[INFO ] últimas linhas do CSV:
+        637ff0bd,Cliente 0133,Casa Branca,Gesso Liso,425.88,em andamento,2026-11-13T00:09:59+00:00
+        2857f2c6,Cliente 0134,Casa Branca,Sanca,287.25,concluído,2026-11-13T00:09:59+00:00
+        42495f8f,Cliente 0135,Casa Branca,Gesso Liso,842.05,orçado,2026-11-13T00:09:59+00:00
+[INFO ] cabeçalho (id + variáveis + data/hora): id_chamado,cliente,cidade,tipo_servico,valor_estimado,status,data_hora_geracao
+
+=== 5. devops1 - pipeline de dados: gerar (Python) -> tratar (R) -> carregar (PostgreSQL) ===
+[ OK  ] o tratamento em R rodou e deixou o relatório de qualidade (/opt/datasci/sistema/dados/tratado/relatorio_qualidade.txt):
+        Linhas por tabela (entrada -> saida):
+          clientes     20800 -> 20000
+          servicos     100000 -> 100000
+          fotos        126214 -> 126199
+          manutencoes  12000 -> 12000
+[ OK  ] tabela clientes carregada: 20000 linhas
+[ OK  ] tabela servicos carregada: 100000 linhas
+[ OK  ] tabela fotos carregada: 126199 linhas
+[ OK  ] tabela manutencoes carregada: 12000 linhas
+[ OK  ] status dos serviços padronizados (0 fora do padrão)
+[ OK  ] telefones padronizados (0 fora do padrão)
+[ OK  ] 7 tipos de serviço (sem grafias duplicadas)
+[ OK  ] valor_total = quantidade x valor unitário em todos os serviços
+
+=== 6. devops2 (10.20.30.130) - proxy reverso na porta 80 ===
+[ OK  ] GET http://10.20.30.130/  -> 200 (front-end do sistema via proxy)
+[ OK  ] GET /api/resumo  -> 200 (API via proxy)
+[ OK  ] GET /dados/  -> 200 (arquivos do simulador via proxy)
+[ OK  ] GET /chamados_servico.csv  -> 200
+[INFO ] resposta de /api/resumo: {"totais":{"clientes":20000,"servicos":100000,"manutencoes":12000,"faturamento":273929370.6,"manutencoes_abertas":4786},"por_tipo":[{"tipo":"Gesso Liso","quanti ...
+
+=== 7. Idempotência: reexecutando o playbook ===
+        devops1                    : ok=42   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+        devops2                    : ok=9    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+[ OK  ] playbook reexecutado: changed=0 e failed=0 (idempotente)
+
+=== Resumo ===
+Verificações OK: 42   Falhas: 0
+RESULTADO: tudo certo para a demonstração.
