@@ -116,6 +116,26 @@ O que o tratamento em R corrige (a contagem exata de cada regra sai em
 - **Valor unitário ausente ("a combinar")** → imputado pela tabela oficial (ou, para Gesso 3D e Boiserie, que não têm preço oficial, pela mediana do tipo) **e sinalizado** em `servicos_qualidade.csv` (`preco_imputado`, `origem_preco`).
 - **Outliers**: apenas **sinalizados** (IQR por tipo para quantidade e valor total; preço > 20% distante da referência) — não são removidos. Campos ausentes (e-mail, endereço, cidade, telefone) ficam vazios, não são inventados.
 
+### Gerar um volume grande (ex.: 100.000 serviços)
+
+Os números são parâmetros do gerador (`--clientes`, `--servicos`, `--manutencoes`).
+Medido com 100.000 serviços (+ 20.000 clientes, ~126 mil fotos, 12.000 manutenções):
+gerar ≈ 4 s, tratar em R ≈ 9 s (pico de ~424 MB de RAM), carregar no PostgreSQL ≈ 15 s;
+a API e o painel continuam respondendo em menos de 0,3 s (listagens paginadas).
+
+```bash
+# Na máquina hospedeira (pastas próprias, não mexem no lote versionado)
+make pipeline-100k                      # 100 mil serviços
+make pipeline-100k N_SERVICOS=250000 N_CLIENTES=50000 N_MANUTENCOES=30000
+
+# Dentro das VMs, pelo Ansible (a partir de infraestrutura/ansible/)
+ansible-playbook -i inventory.ini playbook.yml --tags dados -e recarregar_dados=true \
+  -e qtd_clientes=20000 -e qtd_servicos=100000 -e qtd_manutencoes=12000
+```
+
+Os CSVs grandes (`dados/raw_*`, `dados/tratado_*`) são ignorados pelo Git; para voltar ao
+lote pequeno basta repetir o comando do Ansible sem os `-e qtd_*` (ou `make pipeline`).
+
 > Sem R (ex.: o PC com Windows da demonstração): `dados/tratado/` já vem
 > versionado com um lote pronto (seed 42), então `python scripts/carregar_dados.py --substituir`
 > funciona sem rodar o R.

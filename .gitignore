@@ -6,6 +6,9 @@ infraestrutura/*.tfplan
 infraestrutura/terraform.tfvars
 infraestrutura/crash.log
 dados/raw
+# Lotes grandes (ex.: 100.000 serviços) são gerados na hora, não versionados
+dados/raw_*
+dados/tratado_*
 
 # --- SSH / segredos ---
 *.pem
