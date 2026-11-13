@@ -10,11 +10,12 @@
 -- Baseado no dicionário de dados definido na Entrega 01
 -- (Definição da Fonte e Fluxo de Dados).
 --
--- Observação: colunas de data que recebem valores diretamente dos CSVs
--- gerados (dados/raw/) ficam como VARCHAR, e não DATE/TIMESTAMP,
--- porque o gerador cria formatos de data propositalmente inconsistentes
--- (dd/mm/aaaa, aaaa-mm-dd, etc.) para serem padronizados na etapa de
--- Análise Exploratória de Dados (AED) — ver dados/README.md.
+-- Observação: colunas de data ficam como VARCHAR, e não DATE/TIMESTAMP,
+-- porque o gerador (dados/raw/) cria formatos de data propositalmente
+-- inconsistentes (dd/mm/aaaa, aaaa-mm-dd). O fluxo normal carrega
+-- dados/tratado/ (scripts/tratar_dados.R já padroniza tudo para aaaa-mm-dd),
+-- mas as colunas continuam VARCHAR para também aceitar a carga dos dados
+-- brutos (--dados-dir dados/raw) — ver dados/README.md.
 -- =====================================================================
 
 -- ---------------------------------------------------------------------

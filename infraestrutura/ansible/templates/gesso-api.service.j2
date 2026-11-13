@@ -1,0 +1,15 @@
+[Unit]
+Description=API e front-end do sistema Real Gesso (FastAPI + Uvicorn)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User={{ admin_username }}
+WorkingDirectory={{ sistema_dir }}
+ExecStart={{ venv_dir }}/bin/uvicorn api.main:app --host 0.0.0.0 --port {{ api_port }}
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

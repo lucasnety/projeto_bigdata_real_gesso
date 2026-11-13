@@ -5,15 +5,19 @@ carregar_dados.py
 
 Atividade 5 (DevOps - Provisionamento e preparação dos serviços)
 
-Carrega os CSVs brutos gerados pelo simulador (scripts/gerador_dados.py)
-para dentro do serviço de banco de dados (Postgres) provisionado via
-Docker Compose, completando o fluxo:
+Carrega no Postgres os CSVs JÁ TRATADOS (dados/tratado), completando o fluxo:
 
-    gerador_dados.py  -->  dados/raw/*.csv  -->  carregar_dados.py  -->  Postgres
+    gerador_dados.py --> dados/raw --> tratar_dados.R --> dados/tratado --> carregar_dados.py --> Postgres
+
+O banco funciona tanto no Docker Compose quanto num PostgreSQL instalado
+(VM provisionada pelo OpenTofu + Ansible, ou PostgreSQL portátil no Windows):
+basta a DATABASE_URL do .env apontar para ele.
+
+Para carregar os dados BRUTOS (sem tratamento), use --dados-dir dados/raw.
 
 Uso:
     python scripts/carregar_dados.py
-    python scripts/carregar_dados.py --dados-dir dados/raw --substituir
+    python scripts/carregar_dados.py --dados-dir dados/tratado --substituir
 """
 
 import argparse
@@ -23,7 +27,7 @@ from pathlib import Path
 
 import pandas as pd
 from dotenv import load_dotenv
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, inspect, text
 
 # Ordem de carga respeita as dependências de chave estrangeira:
 # clientes -> servicos -> fotos / manutencoes
@@ -37,7 +41,8 @@ TABELAS_EM_ORDEM = [
 
 def main():
     parser = argparse.ArgumentParser(description="Carrega os CSVs gerados para o Postgres.")
-    parser.add_argument("--dados-dir", default="dados/raw", help="Pasta com os CSVs gerados.")
+    parser.add_argument("--dados-dir", default="dados/tratado",
+                        help="Pasta com os CSVs a carregar (padrão: dados/tratado, saída do tratar_dados.R).")
     parser.add_argument(
         "--substituir",
         action="store_true",
@@ -53,7 +58,8 @@ def main():
 
     dados_dir = Path(args.dados_dir)
     if not dados_dir.exists():
-        print(f"ERRO: pasta '{dados_dir}' não encontrada. Rode antes: python scripts/gerador_dados.py")
+        print(f"ERRO: pasta '{dados_dir}' não encontrada. Rode antes o pipeline: "
+              "python scripts/gerador_dados.py && Rscript scripts/tratar_dados.R  (ou: make pipeline)")
         sys.exit(1)
 
     engine = create_engine(database_url)
@@ -71,6 +77,10 @@ def main():
                 print(f"  [aviso] {caminho} não encontrado, pulando.")
                 continue
             df = pd.read_csv(caminho, encoding="utf-8-sig")
+            # Só carrega as colunas que existem na tabela (arquivos de apoio do
+            # tratamento, como servicos_qualidade.csv, ficam fora do banco).
+            colunas_tabela = {c["name"] for c in inspect(conn).get_columns(nome_tabela)}
+            df = df[[c for c in df.columns if c in colunas_tabela]]
             df.to_sql(nome_tabela, con=conn, if_exists="append", index=False)
             print(f"  {nome_tabela:<15} <- {len(df):>5} linhas ({caminho})")
 

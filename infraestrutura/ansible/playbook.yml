@@ -3,15 +3,28 @@
 # Playbook de configuração das VMs do Projeto Integrado (Data Science)
 #
 #   - Todas as VMs: git, curl, python3, nginx
-#   - devops1: recebe o simulador (via módulo copy/synchronize do
-#     Ansible, que transfere por SSH), instala as dependências,
-#     cria /opt/datasci e um pipeline (systemd timer) que roda o
-#     simulador a cada 5 minutos, armazenando os dados gerados.
-#   - devops2: configura o nginx como proxy reverso na porta 80,
-#     repassando as requisições para o devops1.
+#   - devops1 (parte 1 - Checkpoint 01): recebe o simulador por SSH
+#     (módulo copy do Ansible), cria /opt/datasci e um pipeline
+#     (systemd timer) que roda o simulador a cada 5 minutos.
+#   - devops1 (parte 2 - sistema completo): instala o PostgreSQL, o R, a API
+#     (FastAPI) e o front-end em /opt/datasci/sistema e roda DENTRO da VM o
+#     pipeline de dados:  gerar (Python) -> tratar (R) -> carregar (Postgres).
+#     Depois sobe a API como serviço (systemd, porta 8000).
+#   - devops2: nginx como proxy reverso na porta 80:
+#         /               -> sistema (API + front-end) no devops1:8000
+#         /dados/         -> dados do simulador no devops1:8080
 #
 # Reexecutar este playbook é seguro (idempotente) — nenhuma tarefa
-# recria algo que já existe nem apaga dados já gerados.
+# recria algo que já existe nem apaga dados já gerados/cadastrados.
+# Na 2ª execução o resumo final deve mostrar  changed=0  e  failed=0
+# (o nginx só reinicia quando a configuração realmente mudou — handlers).
+# Para refazer o pipeline de dados de propósito:
+#     ansible-playbook playbook.yml -e recarregar_dados=true
+#
+# Senha do banco: por padrão "gesso_pass" (ambiente de estudo). Para usar
+# outra, sem colocá-la no repositório:
+#     DATASCI_DB_PASSWORD='minha_senha' ansible-playbook playbook.yml
+# (use só letras e números, ela entra numa URL de conexão)
 # =====================================================================
 
 - name: Configuração base (todas as VMs)
@@ -21,10 +34,16 @@
     admin_username: aluno
 
   tasks:
+    - name: Aguardar o cloud-init terminar (evita conflito com o apt)
+      ansible.builtin.command: cloud-init status --wait
+      changed_when: false
+      failed_when: false
+
     - name: Atualizar cache do apt
       ansible.builtin.apt:
         update_cache: true
         cache_valid_time: 3600
+        lock_timeout: 180
 
     - name: Instalar pacotes base (git, curl, nginx, python3)
       ansible.builtin.apt:
@@ -36,6 +55,7 @@
           - python3-venv
           - python3-pip
         state: present
+        lock_timeout: 180
 
     - name: Garantir que o nginx está habilitado
       ansible.builtin.systemd:
@@ -92,8 +112,12 @@
 
     - name: Executar o simulador uma vez, para validar a instalação
       ansible.builtin.command: "{{ app_dir }}/venv/bin/python {{ app_dir }}/app/simulador.py --out-dir {{ app_dir }}/dados"
+      args:
+        # Só roda se o CSV ainda não existe: reexecutar o playbook não
+        # acrescenta linhas nem aparece como "changed". Depois disso quem
+        # gera dados é o timer systemd (a cada 5 minutos).
+        creates: "{{ app_dir }}/dados/chamados_servico.csv"
       become_user: "{{ admin_username }}"
-      changed_when: true
 
     - name: Criar o serviço systemd do pipeline
       ansible.builtin.template:
@@ -119,22 +143,324 @@
         src: templates/nginx-devops1.conf.j2
         dest: /etc/nginx/sites-available/datasci
         mode: "0644"
+      notify: Reiniciar o nginx
 
     - name: Ativar o site do devops1
       ansible.builtin.file:
         src: /etc/nginx/sites-available/datasci
         dest: /etc/nginx/sites-enabled/datasci
         state: link
+      notify: Reiniciar o nginx
 
     - name: Remover o site default do nginx
       ansible.builtin.file:
         path: /etc/nginx/sites-enabled/default
         state: absent
+      notify: Reiniciar o nginx
 
-    - name: Reiniciar o nginx do devops1
+  handlers:
+    - name: Reiniciar o nginx
       ansible.builtin.systemd:
         name: nginx
         state: restarted
+
+- name: Instalar o sistema completo no devops1 (PostgreSQL + API + front-end)
+  hosts: devops1
+  become: true
+  vars:
+    admin_username: aluno
+    sistema_dir: /opt/datasci/sistema
+    venv_dir: /opt/datasci/venv-sistema
+    db_name: gesso_drywall
+    db_user: gesso_user
+    db_password: "{{ lookup('ansible.builtin.env', 'DATASCI_DB_PASSWORD') | default('gesso_pass', true) }}"
+    api_port: 8000
+    # true (via -e recarregar_dados=true) refaz gerar -> tratar -> carregar mesmo com o banco já populado
+    recarregar_dados: false
+    # Tamanho do lote gerado pelo simulador (padrão = lote pequeno da demonstração).
+    # Para 100.000 serviços:
+    #   ansible-playbook playbook.yml -e recarregar_dados=true \
+    #     -e qtd_clientes=20000 -e qtd_servicos=100000 -e qtd_manutencoes=12000
+    qtd_clientes: 330
+    qtd_servicos: 1600
+    qtd_manutencoes: 190
+    # O R precisa de locale UTF-8 para ler/gravar os acentos (SSH não carrega o locale do usuário)
+    env_r:
+      LC_ALL: C.UTF-8
+
+  tasks:
+    - name: Instalar o PostgreSQL
+      ansible.builtin.apt:
+        name: postgresql
+        state: present
+        lock_timeout: 180
+      tags: [pacotes]
+
+    - name: Instalar o R (r-base-core) para o tratamento dos dados
+      ansible.builtin.apt:
+        name: r-base-core
+        state: present
+        install_recommends: false
+        lock_timeout: 180
+      tags: [pacotes]
+
+    - name: Garantir que o PostgreSQL está habilitado e ligado
+      ansible.builtin.systemd:
+        name: postgresql
+        enabled: true
+        state: started
+      tags: [systemd]
+
+    - name: Aguardar o PostgreSQL aceitar conexões
+      ansible.builtin.wait_for:
+        host: 127.0.0.1
+        port: 5432
+        timeout: 60
+
+    - name: Criar a estrutura de diretórios do sistema
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0755"
+      loop:
+        - "{{ sistema_dir }}"
+        - "{{ sistema_dir }}/api"
+        - "{{ sistema_dir }}/db"
+        - "{{ sistema_dir }}/db/init"
+        - "{{ sistema_dir }}/scripts"
+        - "{{ sistema_dir }}/dados"
+        - "{{ sistema_dir }}/dados/raw"
+        - "{{ sistema_dir }}/dados/tratado"
+
+    # A API é copiada arquivo por arquivo (*.py) de propósito: se você rodou a API
+    # no seu PC, existe uma pasta api/__pycache__ que NÃO deve ir para a VM e que
+    # faria o playbook acusar "changed" a cada execução.
+    - name: Copiar o código da API (via SSH)
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ sistema_dir }}/api/{{ item | basename }}"
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0644"
+      loop: "{{ lookup('ansible.builtin.fileglob', playbook_dir ~ '/../../api/*.py', wantlist=True) }}"
+      notify: Reiniciar a API
+
+    - name: Copiar o front-end (via SSH)
+      ansible.builtin.copy:
+        src: "../../frontend/"
+        dest: "{{ sistema_dir }}/frontend/"
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "u=rwX,g=rX,o=rX"
+      notify: Reiniciar a API
+
+    - name: Copiar os scripts de dados (gerador, tratamento em R e carregador)
+      ansible.builtin.copy:
+        src: "../../scripts/{{ item }}"
+        dest: "{{ sistema_dir }}/scripts/{{ item }}"
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0644"
+      loop:
+        - gerador_dados.py
+        - tratar_dados.R
+        - carregar_dados.py
+
+    - name: Copiar o schema do banco
+      ansible.builtin.copy:
+        src: "../../db/init/001_schema.sql"
+        dest: "{{ sistema_dir }}/db/init/001_schema.sql"
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0644"
+
+    - name: Copiar o requirements.txt do sistema
+      ansible.builtin.copy:
+        src: "../../requirements.txt"
+        dest: "{{ sistema_dir }}/requirements.txt"
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0644"
+
+    - name: Gerar o .env do sistema (credenciais do banco, fora do git)
+      ansible.builtin.template:
+        src: templates/env-sistema.j2
+        dest: "{{ sistema_dir }}/.env"
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0600"
+      no_log: true
+      notify: Reiniciar a API
+
+    - name: Criar o ambiente virtual Python do sistema
+      ansible.builtin.command: python3 -m venv {{ venv_dir }}
+      args:
+        creates: "{{ venv_dir }}/bin/activate"
+
+    - name: Instalar as dependências do sistema (requirements.txt)
+      ansible.builtin.pip:
+        requirements: "{{ sistema_dir }}/requirements.txt"
+        virtualenv: "{{ venv_dir }}"
+      notify: Reiniciar a API
+
+    - name: Ajustar o dono dos arquivos do sistema
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        recurse: true
+      loop:
+        - "{{ sistema_dir }}"
+        - "{{ venv_dir }}"
+
+    - name: Criar o usuário do banco (ou atualizar a senha dele)
+      ansible.builtin.shell: |
+        set -e
+        if runuser -u postgres -- psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='{{ db_user }}'" | grep -q 1; then
+          runuser -u postgres -- psql -v ON_ERROR_STOP=1 -q -c "ALTER ROLE {{ db_user }} LOGIN PASSWORD '{{ db_password }}'"
+        else
+          runuser -u postgres -- psql -v ON_ERROR_STOP=1 -q -c "CREATE ROLE {{ db_user }} LOGIN PASSWORD '{{ db_password }}'"
+          echo CRIADO
+        fi
+      args:
+        executable: /bin/bash
+        chdir: /tmp
+      register: r_role
+      changed_when: "'CRIADO' in r_role.stdout"
+      no_log: true
+
+    - name: Criar o banco de dados (se ainda não existir)
+      ansible.builtin.shell: |
+        set -e
+        if ! runuser -u postgres -- psql -tAc "SELECT 1 FROM pg_database WHERE datname='{{ db_name }}'" | grep -q 1; then
+          runuser -u postgres -- psql -v ON_ERROR_STOP=1 -q -c "CREATE DATABASE {{ db_name }} OWNER {{ db_user }} ENCODING 'UTF8' LC_COLLATE 'C.UTF-8' LC_CTYPE 'C.UTF-8' TEMPLATE template0"
+          echo CRIADO
+        fi
+      args:
+        executable: /bin/bash
+        chdir: /tmp
+      register: r_db
+      changed_when: "'CRIADO' in r_db.stdout"
+
+    - name: Criar as tabelas (schema), se ainda não existirem
+      ansible.builtin.shell: |
+        set -e
+        existe=$(psql -h 127.0.0.1 -U {{ db_user }} -d {{ db_name }} -tAc "SELECT to_regclass('public.clientes') IS NOT NULL")
+        if [ "$existe" != "t" ]; then
+          psql -h 127.0.0.1 -U {{ db_user }} -d {{ db_name }} -v ON_ERROR_STOP=1 -q -f {{ sistema_dir }}/db/init/001_schema.sql
+          echo CRIADO
+        fi
+      args:
+        executable: /bin/bash
+        chdir: /tmp
+      environment:
+        PGPASSWORD: "{{ db_password }}"
+        PGCLIENTENCODING: UTF8
+      register: r_schema
+      changed_when: "'CRIADO' in r_schema.stdout"
+      no_log: true
+
+    - name: Verificar se o banco já tem dados
+      ansible.builtin.shell: >
+        psql -h 127.0.0.1 -U {{ db_user }} -d {{ db_name }} -tAc "SELECT COUNT(*) FROM clientes"
+      args:
+        chdir: /tmp
+      environment:
+        PGPASSWORD: "{{ db_password }}"
+      register: r_count
+      changed_when: false
+      no_log: true
+      tags: [dados]
+
+    - name: Decidir se o pipeline de dados precisa rodar
+      ansible.builtin.set_fact:
+        rodar_pipeline: "{{ (r_count.stdout | trim == '0') or (recarregar_dados | bool) }}"
+      tags: [dados]
+
+    # --- Pipeline de dados dentro da VM:  gerar -> tratar (R) -> carregar ---
+    - name: "Pipeline 1/3 - Gerar os dados brutos (gerador_dados.py -> dados/raw)"
+      ansible.builtin.command: "{{ venv_dir }}/bin/python scripts/gerador_dados.py --clientes {{ qtd_clientes }} --servicos {{ qtd_servicos }} --manutencoes {{ qtd_manutencoes }} --out-dir dados/raw"
+      args:
+        chdir: "{{ sistema_dir }}"
+      become_user: "{{ admin_username }}"
+      when: rodar_pipeline | bool
+      tags: [dados]
+
+    - name: "Pipeline 2/3 - Tratar os dados em R (tratar_dados.R -> dados/tratado)"
+      ansible.builtin.command: "Rscript scripts/tratar_dados.R --entrada dados/raw --saida dados/tratado"
+      args:
+        chdir: "{{ sistema_dir }}"
+      environment: "{{ env_r }}"
+      become_user: "{{ admin_username }}"
+      register: r_tratar
+      when: rodar_pipeline | bool
+      tags: [dados]
+
+    - name: Mostrar o resultado do tratamento (linhas antes -> depois)
+      ansible.builtin.debug:
+        msg: "{{ r_tratar.stdout_lines | select('match', '^  (clientes|servicos|fotos|manutencoes) ') | list }}"
+      when: rodar_pipeline | bool
+      tags: [dados]
+
+    - name: "Pipeline 3/3 - Carregar os dados tratados no PostgreSQL (carregar_dados.py)"
+      ansible.builtin.command: "{{ venv_dir }}/bin/python scripts/carregar_dados.py --dados-dir dados/tratado --substituir"
+      args:
+        chdir: "{{ sistema_dir }}"
+      become_user: "{{ admin_username }}"
+      when: rodar_pipeline | bool
+      tags: [dados]
+
+    - name: Publicar o relatório de qualidade (visível em /dados/ pelo proxy do devops2)
+      ansible.builtin.copy:
+        src: "{{ sistema_dir }}/dados/tratado/relatorio_qualidade.txt"
+        dest: /opt/datasci/dados/relatorio_qualidade.txt
+        remote_src: true
+        owner: "{{ admin_username }}"
+        group: "{{ admin_username }}"
+        mode: "0644"
+      when: rodar_pipeline | bool
+      tags: [dados]
+
+    - name: Criar o serviço systemd da API
+      ansible.builtin.template:
+        src: templates/gesso-api.service.j2
+        dest: /etc/systemd/system/gesso-api.service
+        mode: "0644"
+      notify: Reiniciar a API
+
+    - name: Habilitar e iniciar a API
+      ansible.builtin.systemd:
+        name: gesso-api
+        enabled: true
+        state: started
+        daemon_reload: true
+      tags: [systemd]
+
+    - name: Testar a API dentro da própria VM
+      ansible.builtin.uri:
+        url: "http://127.0.0.1:{{ api_port }}/api/resumo"
+        return_content: true
+      register: r_api
+      until: r_api.status == 200
+      retries: 20
+      delay: 3
+      tags: [verificar]
+
+    - name: Mostrar os totais que a API enxerga
+      ansible.builtin.debug:
+        msg: "API no ar — totais: {{ r_api.json.totais }}"
+      tags: [verificar]
+
+  handlers:
+    - name: Reiniciar a API
+      ansible.builtin.systemd:
+        name: gesso-api
+        state: restarted
+        daemon_reload: true
+      tags: [systemd]
 
 - name: Configurar devops2 — proxy reverso (porta 80)
   hosts: devops2
@@ -148,19 +474,23 @@
         mode: "0644"
       vars:
         upstream_host: "{{ hostvars['devops1']['ansible_host'] }}"
+      notify: Reiniciar o nginx
 
     - name: Ativar o site de proxy
       ansible.builtin.file:
         src: /etc/nginx/sites-available/proxy
         dest: /etc/nginx/sites-enabled/proxy
         state: link
+      notify: Reiniciar o nginx
 
     - name: Remover o site default do nginx
       ansible.builtin.file:
         path: /etc/nginx/sites-enabled/default
         state: absent
+      notify: Reiniciar o nginx
 
-    - name: Reiniciar o nginx do devops2
+  handlers:
+    - name: Reiniciar o nginx
       ansible.builtin.systemd:
         name: nginx
         state: restarted
